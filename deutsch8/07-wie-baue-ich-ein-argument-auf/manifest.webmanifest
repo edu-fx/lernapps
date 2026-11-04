@@ -1,0 +1,21 @@
+{
+  "name": "Wie baue ich ein Argument auf?",
+  "short_name": "Argumente",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FF8B80",
+  "theme_color": "#FF8B80",
+  "icons": [
+    {
+      "src": "assets/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

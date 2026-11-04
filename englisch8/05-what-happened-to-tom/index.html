@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What happened to Tom?</title>
+<meta name="theme-color" content="#FFFAC6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Tom">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ════════ Lern-App-Baukasten · Engine (Design nach EUV4 „New York“) ════════
+   Fachfarben aus den PPT-Vorlagen: Deutsch #FF8B80 · Englisch #FFFAC6 · Musik #F2CFEE · WiB weiß/#E8E8E8 */
+:root{
+  --canvas:#DEDBD6; --surface:#F3F2EF; --card:#FFFFFF; --ink:#1B1B1E; --ink2:#46464C; --muted:#86868D; --line:#E2DFDA; --soft:#F5F3EF;
+  --accent:#FFC93C; --accent-ink:#2B2100; --star:#FFC93C; --tint:#FFF6D6; --tint-ink:#5A4100;
+  --ok:#22B26B; --oksoft:#E3F6EC; --bad:#E5484D; --badsoft:#FDECEC; --sel:#2F6FEB; --selsoft:#E6EEFD;
+  --sh:0 1px 2px rgba(0,0,0,.04),0 8px 28px rgba(30,25,20,.08);
+  --sh2:0 2px 6px rgba(0,0,0,.06),0 22px 50px rgba(30,25,20,.18);
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+body.f-englisch{--canvas:#EDE5A2;--surface:#FFFAC6;--line:#EAE2B0;--soft:#FFFCE3;--accent:#FFC93C;--accent-ink:#2B2100;--tint:#FFF3C4;--tint-ink:#5A4100}
+body.f-deutsch{--canvas:#E9695E;--surface:#FF8B80;--line:#F1D3CF;--soft:#FFF1EF;--accent:#FF8B80;--accent-ink:#3A0D08;--tint:#FFE4E0;--tint-ink:#6E1C14}
+body.f-musik{--canvas:#E2B3DC;--surface:#F2CFEE;--line:#EBD5E8;--soft:#FBF0F9;--accent:#F2CFEE;--accent-ink:#45173F;--tint:#FBE6F7;--tint-ink:#5C1F55}
+body.f-wib{--canvas:#D2D2D2;--surface:#E8E8E8;--line:#E2E2E2;--soft:#F4F4F4;--accent:#FFFFFF;--accent-ink:#1B1B1E;--tint:#EFF3F6;--tint-ink:#2A3A48}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input,textarea{font:inherit;color:inherit;-webkit-user-select:text;user-select:text}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0;touch-action:manipulation}
+.ic{width:20px;height:20px;flex:none}
+.st{width:15px;height:15px;fill:currentColor;flex:none}
+.stars{display:inline-flex;gap:1px;align-items:center}
+.shell{max-width:1240px;margin:14px auto;background:var(--surface);border-radius:34px;padding:14px 22px 26px;min-height:calc(100vh - 28px);min-height:calc(100dvh - 28px);box-shadow:var(--sh)}
+
+/* Kopfzeile */
+.top{display:flex;align-items:center;gap:12px;min-height:54px;padding:0 4px;margin-bottom:10px}
+.top.hide{display:none}
+.team{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;white-space:nowrap;max-width:260px;overflow:hidden}
+.logo{width:40px;height:40px;border-radius:12px;flex:none;background:var(--ink);color:var(--star);display:grid;place-items:center}
+.logo .ic{width:22px;height:22px}
+.team span{overflow:hidden;text-overflow:ellipsis}
+.steps{display:flex;gap:4px;margin:0 auto;background:rgba(255,255,255,.6);padding:4px;border-radius:999px;overflow:hidden;min-width:0}
+.step{display:flex;align-items:center;gap:8px;padding:7px 14px 7px 9px;border-radius:999px;font-size:14px;font-weight:600;color:var(--muted);white-space:nowrap}
+.step .mk{min-width:26px;height:26px;border-radius:999px;display:grid;place-items:center;padding:0 6px;background:#E7E4DF;color:var(--ink2)}
+.step .mk .st{width:12px;height:12px}
+.step .mk .ic{width:14px;height:14px}
+.step.cur{background:var(--card);color:var(--ink);box-shadow:var(--sh)}
+.step.cur .mk{background:var(--ink);color:var(--star)}
+.step.done .mk{background:var(--ok);color:#fff}
+.timer,.wbtn{height:42px;border-radius:999px;padding:0 16px;display:flex;align-items:center;gap:8px;font-weight:700;background:var(--card);box-shadow:var(--sh);font-size:16px;white-space:nowrap;flex:none}
+.timer{font-variant-numeric:tabular-nums}
+.wbtn{font-size:15px}
+.wbtn .ic{width:18px;height:18px}
+.timer.warn{background:var(--star);color:#2B2100}
+.timer.crit{background:var(--bad);color:#fff}
+
+/* Knöpfe */
+.btn{min-height:50px;padding:0 22px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:16px;font-weight:600;white-space:nowrap;transition:transform .15s,background .2s,opacity .2s}
+.btn:active{transform:scale(.96)}
+.btn.sm{min-height:44px;padding:0 16px;font-size:15px}
+.btn.big{min-height:60px;padding:0 30px;font-size:18px}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.light{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn.tip{background:var(--tint);color:var(--tint-ink)}
+.btn.okb{background:var(--ok);color:#fff}
+.btn.appear{animation:popIn .5s cubic-bezier(.2,.9,.3,1.25) both}
+.btn[disabled]{opacity:.35;pointer-events:none}
+.linkbtn{font-size:15px;font-weight:600;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:12px}
+
+/* Start */
+.hero{position:relative;border-radius:30px;overflow:hidden;min-height:360px;background:var(--soft) center 30%/cover no-repeat;display:flex;align-items:center;justify-content:flex-end;padding:48px 56px}
+.hero .art{position:absolute;left:0;top:0;bottom:0;width:58%;background:var(--artbg,#eee)}
+.hero .art svg{width:100%;height:100%;display:block}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(270deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.9) 40%,rgba(255,255,255,0) 58%);z-index:1}
+.hero-in{position:relative;z-index:2;max-width:560px;animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:16px}
+.eyebrow b{width:8px;height:8px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 4px rgba(0,0,0,.08)}
+.hero h1{font-size:48px;line-height:1.06;letter-spacing:-.03em;margin:0 0 14px;font-weight:800}
+.hero p{font-size:18px;line-height:1.5;color:var(--ink2);margin:0}
+.startrow{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;margin-top:16px}
+.lvlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.lvmini{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:1/1.05;background:var(--c,#eee);box-shadow:var(--sh);display:flex;align-items:center;justify-content:center}
+.lvmini>.ico{width:44%;height:44%;color:var(--ink);opacity:.85;margin-bottom:34%}
+.lvmini>.ico svg{width:100%;height:100%}
+.lvmini>span{display:block;position:absolute;left:8px;right:8px;bottom:8px;background:#fff;border-radius:16px;font-size:13px;font-weight:600;padding:6px 8px;text-align:center;line-height:1.25}
+.lvmini>span>.stars{display:flex;justify-content:center;color:#E0A800;margin-bottom:2px}
+.lvmini.bonus::after{content:var(--bonus,"Bonus");position:absolute;top:8px;right:8px;background:var(--ink);color:var(--star);font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px}
+.rules{margin-top:12px;font-size:15px;color:var(--ink2);font-weight:600;text-align:center}
+.go-card{background:var(--card);border-radius:26px;padding:22px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:12px}
+.go-card h3{margin:0 0 2px;font-size:20px;line-height:1.3}
+.namerow label{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin:0 0 4px 16px}
+.tin{width:100%;height:52px;border-radius:999px;border:1.5px solid var(--line);padding:0 20px;font-size:18px;outline:none;background:var(--soft)}
+.tin:focus{border-color:var(--ink);background:#fff}
+.goal{display:flex;gap:12px;align-items:center;background:var(--tint);color:var(--tint-ink);border-radius:18px;padding:12px 16px;font-size:16px;font-weight:500;line-height:1.4}
+.goal b{font-weight:700}
+
+/* Erklärseite */
+.brief{display:grid;grid-template-columns:.85fr 1.15fr;background:var(--card);border-radius:30px;box-shadow:var(--sh);overflow:hidden;max-width:1000px;margin:10px auto 0;animation:rise .5s both}
+.brief .pic{min-height:400px;background:var(--c,#eee);position:relative;display:grid;place-items:center}
+.brief .pic .ico{width:46%;color:var(--ink);opacity:.85}
+.brief .pic .ico svg{width:100%;height:auto}
+.brief .pic .lbadge{position:absolute;left:20px;top:20px}
+.brief .txt{padding:40px 40px 34px;display:flex;flex-direction:column;gap:18px}
+.brief .kick{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.brief h2{margin:-8px 0 0;font-size:34px;letter-spacing:-.02em;line-height:1.1}
+.brief ol{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.brief li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;font-size:18px;line-height:1.45}
+.brief li b.n{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--star);display:grid;place-items:center;font-size:16px}
+.brief .go{margin-top:auto;align-self:flex-start}
+
+/* Level-Kopf */
+.lhead{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.lt{display:flex;align-items:center;gap:12px;flex:1;min-width:260px}
+.lbadge{height:46px;padding:0 12px;border-radius:16px;background:var(--ink);color:var(--star);display:inline-flex;align-items:center;flex:none}
+.lbadge .st{width:18px;height:18px}
+.lt b{display:block;font-size:21px;letter-spacing:-.01em}
+.lt small{display:block;color:var(--ink2);font-size:15px;margin-top:2px}
+.lacts{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* Station: Material links, Aufgabe rechts */
+.sgrid{display:grid;grid-template-columns:1fr;gap:16px;align-items:start}
+.sgrid.mat{grid-template-columns:1fr 1.08fr}
+.matcard{background:var(--card);border-radius:26px;box-shadow:var(--sh);padding:22px 26px;max-height:calc(100dvh - 190px);overflow:auto;-webkit-overflow-scrolling:touch;position:sticky;top:14px}
+.task{background:var(--card);border-radius:26px;box-shadow:var(--sh);padding:22px 28px 20px;animation:rise .4s both}
+.thead{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.thead h3{margin:0;font-size:24px;letter-spacing:-.02em;line-height:1.2;flex:1}
+.tnum{font-size:13px;font-weight:700;color:var(--muted);background:var(--soft);border-radius:999px;padding:5px 11px;white-space:nowrap}
+.tq{font-size:19px;line-height:1.5;margin:8px 0 14px;font-weight:500}
+.tq p{margin:0 0 8px}
+.tfoot{display:flex;align-items:center;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);flex-wrap:wrap}
+.tfoot .sp{flex:1}
+.fb{display:flex;gap:10px;align-items:center;border-radius:16px;padding:12px 16px;font-size:16px;font-weight:600;margin-top:14px;line-height:1.4}
+.fb.ok{background:var(--oksoft);color:#11683D}
+.fb.bad{background:var(--badsoft);color:#9B1C20}
+.fb.tipbox{background:var(--tint);color:var(--tint-ink);font-weight:500}
+.fb .ic{flex:none}
+.pips{display:flex;gap:6px;margin:0 0 12px;flex-wrap:wrap}
+.pips button{height:10px;flex:1;min-width:22px;max-width:70px;border-radius:9px;background:rgba(0,0,0,.12)}
+.pips button.d{background:var(--ok)}
+.pips button.c{background:var(--ink)}
+
+/* Inhaltsbausteine */
+.md{font-size:18px;line-height:1.6}
+.md p{margin:0 0 12px}
+.md ul{margin:0 0 12px;padding-left:22px}
+.md li{margin:4px 0}
+.md h4{margin:4px 0 8px;font-size:20px}
+.merke{background:var(--tint);color:var(--tint-ink);border-radius:20px;padding:16px 20px;display:flex;gap:12px}
+.merke .ic{width:24px;height:24px;flex:none;margin-top:3px}
+.figure{display:block;max-width:100%;max-height:46vh;margin:6px auto 12px;border-radius:16px;box-shadow:var(--sh)}
+.rtext{font-size:18px;line-height:1.75}
+.rtext .ln{display:grid;grid-template-columns:34px 1fr;gap:10px}
+.rtext .ln i{font-style:normal;color:var(--muted);font-size:13px;text-align:right;padding-top:5px;font-variant-numeric:tabular-nums}
+.rtext p{margin:0 0 12px}
+.rhead{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.rtitle{font-size:24px;font-weight:800;letter-spacing:-.02em;margin:0 0 12px}
+.gl{border-bottom:2.5px dotted #B8B4AE;cursor:pointer}
+audio{width:100%;margin:6px 0 10px}
+.yt{position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000;margin:6px 0 10px}
+.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* Auswahl (MC) */
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;text-align:left;background:var(--soft);border-radius:18px;padding:14px 16px;font-size:18px;font-weight:500;line-height:1.4;border:2.5px solid transparent;min-height:58px;transition:border-color .2s,background .2s}
+.opt b{width:32px;height:32px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:15px;flex:none;box-shadow:inset 0 0 0 1.5px var(--line)}
+.opt.on{border-color:var(--sel);background:var(--selsoft)}
+.opt.on b{background:var(--sel);color:#fff;box-shadow:none}
+.opt.ok{border-color:var(--ok);background:var(--oksoft)}
+.opt.ok b{background:var(--ok);color:#fff;box-shadow:none}
+.opt.bad{border-color:var(--bad);background:var(--badsoft)}
+.opt.bad b{background:var(--bad);color:#fff;box-shadow:none}
+.opt img{max-height:90px;border-radius:10px}
+
+/* Richtig/Falsch */
+.tf{display:grid;gap:10px}
+.tfr{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;background:var(--soft);border-radius:18px;padding:12px 12px 12px 18px;font-size:18px;line-height:1.4;border:2.5px solid transparent}
+.tfr.ok{border-color:var(--ok);background:var(--oksoft)}
+.tfr.bad{border-color:var(--bad);background:var(--badsoft)}
+.seg{display:flex;gap:4px;background:#fff;padding:4px;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--line)}
+.seg button{min-height:42px;padding:0 16px;border-radius:999px;font-size:15px;font-weight:600;color:var(--ink2)}
+.seg button.on{background:var(--ink);color:#fff}
+
+/* Lücken */
+.gtext{font-size:20px;line-height:2.25}
+.gin{display:inline-block;height:42px;border-radius:12px;border:2px solid var(--line);background:var(--soft);padding:0 10px;font-size:19px;outline:none;vertical-align:middle;min-width:70px;text-align:center;transition:border-color .2s,background .2s}
+.gin:focus{border-color:var(--ink);background:#fff}
+.gslot{display:inline-flex;align-items:center;justify-content:center;height:42px;min-width:96px;padding:0 12px;border-radius:12px;background:#F1EBDD;box-shadow:inset 0 -2px 0 #BFB49D;font-size:19px;font-weight:600;vertical-align:middle;margin:0 2px;line-height:1}
+.gslot.f{background:var(--selsoft);box-shadow:inset 0 0 0 2px var(--sel)}
+.gslot.act{box-shadow:inset 0 0 0 2.5px var(--ink);background:#fff}
+.gin.ok,.gslot.ok{border-color:var(--ok);background:var(--oksoft);box-shadow:inset 0 0 0 2px var(--ok)}
+.gin.bad,.gslot.bad{border-color:var(--bad);background:var(--badsoft);box-shadow:inset 0 0 0 2px var(--bad)}
+.bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding:14px;border-radius:20px;background:var(--soft)}
+.chip{min-height:46px;padding:0 16px;border-radius:14px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.06),inset 0 0 0 1.5px var(--line);font-size:18px;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:transform .15s,opacity .2s,box-shadow .2s}
+.chip:active{transform:scale(.95)}
+.chip.used{opacity:.25;pointer-events:none}
+.chip.on{box-shadow:inset 0 0 0 2.5px var(--sel);background:var(--selsoft)}
+.chip.ok{box-shadow:inset 0 0 0 2px var(--ok);background:var(--oksoft)}
+.chip.bad{box-shadow:inset 0 0 0 2px var(--bad);background:var(--badsoft)}
+.chip img{height:60px;border-radius:8px;margin:6px 0}
+
+/* Zuordnen */
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+.pcol{display:grid;gap:10px;align-content:start}
+.pcol h5{margin:0 0 2px 6px;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.pit{display:flex;align-items:center;gap:10px;text-align:left;background:var(--soft);border-radius:16px;padding:12px 14px;font-size:17px;font-weight:500;line-height:1.35;border:2.5px solid transparent;min-height:56px}
+.pit i{width:26px;height:26px;border-radius:50%;flex:none;background:#fff;box-shadow:inset 0 0 0 1.5px var(--line);font-style:normal;font-size:13px;font-weight:700;display:grid;place-items:center;color:#fff}
+.pit.on{border-color:var(--ink);background:#fff}
+.pit.ok{border-color:var(--ok)}
+.pit.bad{border-color:var(--bad);background:var(--badsoft)}
+.pit img{max-height:70px;border-radius:8px}
+
+/* Kategorien */
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:14px}
+.cat{background:var(--soft);border-radius:20px;padding:12px;min-height:130px;display:flex;flex-direction:column;gap:8px;border:2.5px dashed transparent;text-align:left;transition:border-color .2s}
+.cat.armed{border-color:var(--ink)}
+.cat h5{margin:2px 4px 4px;font-size:16px;display:flex;align-items:center;gap:8px}
+.cat h5 i{width:12px;height:12px;border-radius:50%;background:var(--ink)}
+.cat .chip{font-size:16px;min-height:42px}
+
+/* Reihenfolge */
+.order{min-height:66px;border-radius:20px;background:var(--soft);padding:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;border:2.5px dashed var(--line)}
+.order.list{flex-direction:column;align-items:stretch}
+.order.list .chip{justify-content:flex-start;text-align:left;white-space:normal;padding:10px 14px;line-height:1.35}
+.order .chip b{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:13px;flex:none}
+.order.ok{border-color:var(--ok);background:var(--oksoft)}
+.order.bad{border-color:var(--bad);background:var(--badsoft)}
+.pool{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pool.list{flex-direction:column;align-items:stretch}
+.pool.list .chip{justify-content:flex-start;white-space:normal;padding:10px 14px;line-height:1.35;text-align:left}
+.olabel{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px 6px}
+
+/* Markieren */
+.mtext{font-size:20px;line-height:2}
+.tok{border-radius:8px;padding:2px 3px;margin:0 -1px;cursor:pointer;transition:background .15s}
+.tok.on{background:var(--star);box-shadow:0 0 0 2px var(--star)}
+.tok.ok{background:#BDEBD2;box-shadow:0 0 0 2px var(--ok)}
+.tok.bad{background:#F9C9CB;box-shadow:0 0 0 2px var(--bad)}
+.tok.miss{box-shadow:0 0 0 2px var(--ok);background:transparent}
+
+/* Schreiben */
+.wr textarea,.sa input{width:100%;resize:none;border:2px solid transparent;background:var(--soft);border-radius:18px;padding:14px 16px;font-size:19px;line-height:1.5;outline:none;min-height:150px;transition:border-color .2s,background .2s}
+.sa input{min-height:56px;height:56px;border-radius:999px;padding:0 20px}
+.wr textarea:focus,.sa input:focus{border-color:var(--ink);background:#fff}
+.sa input.ok{border-color:var(--ok);background:var(--oksoft)}
+.sa input.bad{border-color:var(--bad);background:var(--badsoft)}
+.starters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.starters .chip{font-size:15px;min-height:40px;background:var(--tint);color:var(--tint-ink);box-shadow:none}
+.wcount{font-size:14px;font-weight:600;color:var(--muted);margin-top:8px;text-align:right}
+.wcount.ok{color:var(--ok)}
+.check{display:grid;gap:8px;margin-top:14px}
+.check button{display:flex;gap:12px;align-items:center;text-align:left;background:var(--soft);border-radius:16px;padding:10px 14px;font-size:16px;font-weight:500;min-height:50px}
+.check button i{width:26px;height:26px;border-radius:8px;background:#fff;box-shadow:inset 0 0 0 1.5px var(--line);display:grid;place-items:center;flex:none}
+.check button i svg{opacity:0}.check button.on i svg{opacity:1}
+.check button.on i{background:var(--ok);box-shadow:none;color:#fff}
+
+/* Dialog */
+.dbox{background:#fff;border-radius:22px;padding:4px 4px}
+.dl{display:grid;grid-template-columns:170px 1fr;gap:16px;padding:10px 6px;border-bottom:1px solid #EEECE8;align-items:baseline}
+.dl:last-child{border-bottom:0}
+.who{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;color:var(--c)}
+.who em{font-style:normal;font-weight:500;color:var(--muted);overflow:hidden;text-overflow:ellipsis}
+.dl .tx{font-size:20px;line-height:1.45;font-weight:500}
+.dot{width:26px;height:26px;border-radius:50%;display:inline-grid;place-items:center;color:#fff;font-size:12px;font-weight:700;flex:none;background:var(--c)}
+.av{width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:50% 15%;box-shadow:0 0 0 2px var(--c);flex:none}
+.blk{display:inline-block;min-width:calc(var(--len)*.5em + 16px);height:1.25em;vertical-align:-.28em;border-radius:7px;background:#F1EBDD;box-shadow:inset 0 -2px 0 #BFB49D;margin:0 2px}
+.bstage{background:var(--soft);border-radius:22px;padding:18px;min-height:260px;display:flex;flex-direction:column;gap:12px}
+.bubble{position:relative;background:#fff;border-radius:24px;padding:16px 22px 18px;max-width:86%;box-shadow:var(--sh);font-size:22px;line-height:1.5;font-weight:500;animation:popIn .45s cubic-bezier(.2,.9,.3,1.25) both}
+.bubble.l{margin-right:auto;border-bottom-left-radius:6px;box-shadow:inset 4px 0 0 var(--c),var(--sh)}
+.bubble.r{margin-left:auto;border-bottom-right-radius:6px;box-shadow:inset -4px 0 0 var(--c),var(--sh)}
+.bwho{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;margin-bottom:6px;color:var(--c)}
+.bwho em{font-style:normal;font-weight:500;color:var(--muted)}
+.bprog{display:flex;gap:5px}
+.bprog i{flex:1;height:6px;border-radius:9px;background:rgba(0,0,0,.1)}
+.bprog i.d{background:var(--ink)}
+
+/* Karteikarten */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.fc{perspective:900px;height:150px}
+.fc .in{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.fc.flip .in{transform:rotateY(180deg)}
+.fc .fa,.fc .ba{position:absolute;inset:0;border-radius:20px;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font-size:20px;font-weight:600;line-height:1.35;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.fc .fa{background:var(--soft);box-shadow:inset 0 0 0 1.5px var(--line)}
+.fc .ba{background:var(--ink);color:#fff;transform:rotateY(180deg);font-weight:500}
+.fc .fa img{max-height:110px;max-width:100%;border-radius:10px}
+.fc.seen .fa::after{content:"";position:absolute;top:10px;right:10px;width:10px;height:10px;border-radius:50%;background:var(--ok)}
+
+/* Bericht / Präsentation */
+.badge-ic{width:76px;height:76px;border-radius:50%;background:var(--ink);color:var(--star);display:grid;place-items:center;margin:0 auto}
+.badge-ic .ic{width:36px;height:36px}
+.ask{background:var(--card);border-radius:30px;box-shadow:var(--sh);padding:36px 30px;text-align:center;max-width:760px;margin:20px auto}
+.ask h2{margin:16px 0 8px;font-size:32px;letter-spacing:-.02em}
+.ask p{margin:0 auto 20px;color:var(--ink2);font-size:17px;max-width:560px}
+.ask .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.score{display:inline-flex;gap:10px;align-items:center;background:var(--soft);border-radius:999px;padding:10px 20px;font-size:18px;font-weight:700;margin-bottom:4px}
+.rep{max-width:900px;margin:0 auto;display:grid;gap:12px}
+.rcard{background:var(--card);border-radius:24px;box-shadow:var(--sh);padding:18px 22px}
+.rcard h4{margin:0 0 10px;font-size:18px;display:flex;align-items:center;gap:10px}
+.rrow{display:grid;grid-template-columns:30px 1fr;gap:10px;padding:8px 0;border-top:1px solid #EEECE8;font-size:16px;line-height:1.45;align-items:start}
+.rrow:first-of-type{border-top:0}
+.rrow .m{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff}
+.rrow .m .ic{width:15px;height:15px}
+.rrow .m.a{background:var(--ok)} .rrow .m.b{background:#9AD3B2} .rrow .m.c{background:var(--star);color:#2B2100} .rrow .m.d{background:#CFCBC4}
+.rrow blockquote{margin:6px 0 0;padding:10px 14px;background:var(--soft);border-radius:14px;font-size:17px;white-space:pre-wrap;-webkit-user-select:text;user-select:text}
+
+/* Overlay & Effekte */
+.ovl{position:fixed;inset:0;background:rgba(24,22,20,.42);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}
+.ovl.open{display:flex}
+.sheet{background:#fff;border-radius:30px;max-width:540px;width:100%;padding:30px 30px 26px;box-shadow:var(--sh2);max-height:92vh;overflow:auto;animation:popIn .4s cubic-bezier(.2,.9,.3,1.2) both;text-align:center}
+.sheet h2{margin:16px 0 8px;font-size:26px;letter-spacing:-.02em}
+.sheet p{margin:0 auto 6px;color:var(--ink2);line-height:1.5;max-width:420px}
+.sheet.bankw{max-width:720px;text-align:left;padding:22px 24px}
+.sh-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.shead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.shead h2{margin:0;font-size:24px}
+.wgrid{display:grid;gap:12px}
+.wcard{background:var(--soft);border-radius:20px;padding:16px 20px;border:2.5px solid transparent}
+.wcard.sel{background:var(--tint);border-color:var(--star)}
+.wcard .w-en{font-size:24px;font-weight:700}
+.wcard .w-de{font-size:18px;color:var(--ink2);margin-top:2px}
+.wcard .w-ex{font-size:16px;color:var(--ink2);margin-top:10px;padding-top:10px;border-top:1px solid var(--line);line-height:1.45}
+.ib{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;flex:none}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,30px);background:var(--ink);color:#fff;padding:13px 20px;border-radius:999px;font-size:15px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:90;box-shadow:var(--sh2);max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+#confetti{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:95;display:none}
+.dev{position:fixed;left:10px;bottom:10px;z-index:99;background:#7C3AED;color:#fff;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:700;display:flex;gap:6px;align-items:center}
+.dev select{font-size:12px;border-radius:8px;border:0;padding:2px 4px;max-width:260px}
+.lock{max-width:460px;margin:80px auto;background:#fff;border-radius:30px;box-shadow:var(--sh);padding:34px;text-align:center}
+.lock h2{margin:16px 0 8px}
+.lock .tin{text-align:center;margin:16px 0 12px}
+.lock small{display:block;min-height:22px;color:var(--bad);font-weight:600}
+
+@keyframes popIn{from{opacity:0;transform:scale(.86) translateY(10px)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-6px)}40%,60%{transform:translateX(6px)}}
+.shake{animation:shake .45s both}
+
+@media (max-width:1020px){
+  .startrow,.sgrid.mat{grid-template-columns:1fr}
+  .matcard{position:static;max-height:42vh}
+  .hero h1{font-size:40px}
+  .step>span:last-child{display:none}
+  .step{padding:7px}
+  .brief{grid-template-columns:1fr}
+  .brief .pic{min-height:200px}
+  .brief .pic .ico{width:120px}
+}
+@media (max-width:820px){
+  .hero{padding:34px 28px;min-height:300px}
+  .hero .art{width:100%;opacity:.35}
+  .hero::before{background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.75))}
+}
+@media (max-width:620px){
+  .shell{margin:0;border-radius:0;padding:10px 14px 20px;min-height:100vh}
+  .top{flex-wrap:wrap}
+  .steps{order:3;margin:0}
+  .wbtn span{display:none}
+  .hero h1{font-size:30px}
+  .pairs{grid-template-columns:1fr 1fr;gap:8px}
+  .dl{grid-template-columns:1fr;gap:4px}
+  .task{padding:18px 16px}
+  .brief .txt{padding:24px}
+}
+@media (display-mode:standalone){.shell{margin-top:max(14px,env(safe-area-inset-top))}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body class="f-englisch">
+<div class="shell">
+  <header class="top hide" id="top"></header>
+  <main id="view"></main>
+</div>
+<div class="ovl" id="ovl"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+<canvas id="confetti"></canvas>
+<script>
+'use strict';
+/* ════════════════════════════════════════════════════════════════
+   Lern-App-Baukasten – Engine. NICHT pro Stunde ändern.
+   Inhalt kommt aus app.json (eingesetzt von lernapp.py):
+     META  = sichtbar (Fach, Titel, Sprache)            DATA = Stationen + Bausteine
+     ENC   = verschlüsselte DATA (nur mit Passwort)
+   Testmodus: index.html?dev  (kurze Zeit + Sprungmenü)
+   ════════════════════════════════════════════════════════════════ */
+const META = {"fach": "englisch", "lang": "en", "id": "englisch8-05-what-happened-to-tom", "frage": "What happened to Tom?", "kicker": "Tom’s bad day", "kurz": "Tom"};
+let APP = {"frage": "What happened to Tom?", "kurz": "Tom", "kicker": "Tom’s bad day", "untertitel": "Read Tom’s story and practise the simple past.", "auftrag": "Work with your partner.", "ziel": "At the end, you can tell what happened to Tom.", "namen": 2, "zeit": {"gesamt": 15, "extra": 3}, "wortbank": [{"wort": "to miss the bus", "form": "missed the bus", "bedeutung": "den Bus verpassen", "beispiel": "Tom missed the bus."}, {"wort": "to drop", "form": "dropped", "bedeutung": "fallen lassen", "beispiel": "He dropped his phone."}, {"wort": "luckily", "bedeutung": "zum Glück", "beispiel": "Luckily, his friend Amy helped him."}], "stationen": [{"titel": "Read the story", "kurz": "Read", "sterne": 1, "symbol": "lesen", "auftrag": "Read the text. Then answer the questions.", "erklaerung": ["Read Tom’s story on the left.", "Answer the questions on the right.", "Tap the dotted words if you need help."], "material": {"typ": "lesetext", "titel_text": "Tom’s bad day", "zeilennummern": true, "text": "Last Monday, Tom woke up late.\nHe jumped out of bed and ran to the bus stop.\nBut he missed the bus.\n\nSo he walked to school in the rain.\nOn the way, he dropped his phone in a puddle.\nThe phone did not work any more.\n\nAt school, his teacher was angry.\nLuckily, his friend Amy helped him.\nShe gave him her umbrella for the way home."}, "bausteine": [{"typ": "wahr_falsch", "titel": "True or false?", "aufgabe": "Read the sentences. Are they true or false?", "aussagen": [{"text": "Tom woke up early.", "wahr": false}, {"text": "Tom missed the bus.", "wahr": true}, {"text": "He went to school by car.", "wahr": false}, {"text": "Amy gave Tom her umbrella.", "wahr": true}], "tipp": "Look at lines 1–4 and 8–9."}, {"typ": "mc", "titel": "What happened to the phone?", "aufgabe": "Choose the right answer.", "optionen": ["Tom lost it on the bus.", "Tom dropped it in a puddle.", "Amy took it."], "richtig": 1, "tipp": "Look at line 5."}]}, {"titel": "Simple past", "kurz": "Past", "sterne": 2, "symbol": "luecke", "auftrag": "Practise the simple past.", "erklaerung": ["Fill in the verbs in the simple past.", "Then put the words in the right order."], "bausteine": [{"typ": "info", "titel": "Remember", "merke": true, "text": "**Simple past** – things that happened in the past.\n\n- regular verbs: walk → walk**ed**, drop → drop**ped**\n- irregular verbs: run → **ran**, give → **gave**, wake → **woke**"}, {"typ": "luecken", "titel": "Fill the gaps", "aufgabe": "Tap a gap. Then tap the right verb.", "modus": "auswahl", "text": "Tom [woke] up late. He [ran] to the bus stop. He [walked] to school. Amy [gave] him her umbrella.", "ablenker": ["wake", "runned"], "tipp": "Two words are not in the simple past."}, {"typ": "luecken", "titel": "Write the verbs", "aufgabe": "Write the simple past.", "text": "jump → [jumped]\nmiss → [missed]\ndrop → [dropped]\nbe (he) → [was]", "tipp": "drop: double the p."}, {"typ": "reihenfolge", "titel": "Make a sentence", "aufgabe": "Put the words in the right order.", "modus": "satz", "elemente": ["Tom", "missed", "the", "bus", "last", "Monday."]}]}, {"titel": "Tell the story", "kurz": "Tell", "sterne": 3, "symbol": "schreiben", "auftrag": "Tell the story in your own words.", "erklaerung": ["Put the events in the right order.", "Then write three sentences about Tom’s day.", "Read your sentences to your partner."], "bausteine": [{"typ": "reihenfolge", "titel": "What happened first?", "modus": "liste", "elemente": ["Tom woke up late.", "He missed the bus.", "He dropped his phone.", "His teacher was angry.", "Amy helped him."]}, {"typ": "schreiben", "titel": "Your story", "aufgabe": "Write at least three sentences about Tom’s day.", "satzanfaenge": ["Last Monday, …", "First, …", "Then …", "Luckily, …"], "mindestwoerter": 20, "checkliste": ["I used the simple past.", "I wrote at least three sentences."], "platzhalter": "Write in English …"}]}], "abschluss": {"text": "Read your story to your partner. Then show this page to your teacher."}};
+const ENC = /*__ENC__*/null;
+
+const DEV = /[?&]dev\b/.test(location.search);
+const EN = META.lang === 'en';
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = s => { s = Math.max(0, Math.ceil(s)); return Math.floor(s/60) + ':' + String(s%60).padStart(2, '0'); };
+const norm = s => String(s ?? '').toLowerCase().replace(/[’‘`´]/g, "'").replace(/[“”„]/g, '"').replace(/\s+/g, ' ').replace(/^[\s.,!?;:]+|[\s.,!?;:]+$/g, '').trim();
+const shuffle = (a, seed) => { a = a.slice(); let s = seed || 7; const r = () => (s = (s * 16807) % 2147483647) / 2147483647; for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const same = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
+
+// ───────────── Texte (Englisch-Apps komplett auf Englisch) ─────────────
+const T = EN ? {
+  start:'Let’s start', name:'Name', names1:'Your name', partner:'Partner', goal:'Your goal:', minutes:m => `You have ${m} minutes.`,
+  level:'Level', check:'Check', next:'Next', back:'Back', tip:'Tip', solution:'Show solution', finish:'Finish',
+  right:['Great!','Well done!','Perfect!','Excellent!','Super!'], wrong:'Not quite. Try again.', wrong2:'Not quite. Look at the tip or try again.',
+  partly:n => `${n} correct. Look at the red ones again.`, solved:'Here is the solution. Read it carefully.',
+  complete:'Answer everything first.', bank:'Word Bank', bankEmpty:'No words yet.',
+  timeup:'Time is up!', more:m => `Do you need ${m} more minutes?`, yes:m => `Yes, ${m} more minutes`, no:'No, we are done',
+  timeup2:'Time is up! Let’s look at your results.', results:'Your results', resultsOf:(a, b) => `${a} of ${b} tasks correct`,
+  show:'Show this page to your teacher.', again:'Start again!', sure:'Are you sure?', sureTxt:'Everything will be deleted.', yesDel:'Yes, delete', cancel:'Cancel',
+  welcome:'Welcome back!', cont:'Continue', startLvl:n => `Start Level ${n}`, backTo:n => `Back to Level ${n}`, levelDone:n => `Level ${n} done!`,
+  write:'Write here …', words:(n, m) => `${n} / ${m} words`, wordsOk:n => `${n} words`, checklist:'Check your text:', answer:'Your answer …',
+  tTrue:'True', tFalse:'False', tapGap:'Tap a gap, then tap a word.', tapPair:'Tap one item on the left, then the matching item on the right.',
+  tapCat:'Tap a card, then tap the right group.', tapOrder:'Tap the parts in the right order.', tapMark:'Tap the words.', tapFlip:'Tap the cards to turn them.',
+  stepNext:'Next line', stepAll:'Show whole dialogue', stepAgain:'Again step by step', bonus:'Bonus',
+  pw:'Password', pwTxt:'Enter the class password.', pwBad:'Wrong password. Try again.', open:'Open', ready:'Ready? You can’t go back after this.', readyBtn:'Show results',
+  done:'Done', firstTry:'right first time', afterTries:'right after trying again', withHelp:'solved with help', open2:'not done', fit:'Great, you are fit!', fitTxt:n => `You can go on to Level ${n} now.`, fitGo:n => `Go to Level ${n}`, fitStay:'Practise a bit more'
+} : {
+  start:'Los geht’s', name:'Name', names1:'Dein Name', partner:'Partner/in', goal:'Euer Ziel:', minutes:m => `Ihr habt ${m} Minuten Zeit.`,
+  level:'Level', check:'Prüfen', next:'Weiter', back:'Zurück', tip:'Tipp', solution:'Lösung zeigen', finish:'Fertig',
+  right:['Super!','Richtig!','Klasse!','Stark!','Genau!'], wrong:'Noch nicht ganz. Versucht es noch einmal.', wrong2:'Noch nicht ganz. Schaut euch den Tipp an.',
+  partly:n => `${n} richtig. Schaut euch die roten noch einmal an.`, solved:'Hier ist die Lösung. Lest sie genau.',
+  complete:'Bearbeitet zuerst alles.', bank:'Wortspeicher', bankEmpty:'Noch keine Wörter.',
+  timeup:'Die Zeit ist um!', more:m => `Braucht ihr noch ${m} Minuten?`, yes:m => `Ja, noch ${m} Minuten`, no:'Nein, wir sind fertig',
+  timeup2:'Die Zeit ist um! Jetzt seht ihr euer Ergebnis.', results:'Euer Ergebnis', resultsOf:(a, b) => `${a} von ${b} Aufgaben richtig`,
+  show:'Zeigt diese Seite eurer Lehrkraft.', again:'Neu starten', sure:'Seid ihr sicher?', sureTxt:'Alles wird gelöscht.', yesDel:'Ja, löschen', cancel:'Abbrechen',
+  welcome:'Willkommen zurück!', cont:'Weitermachen', startLvl:n => `Level ${n} starten`, backTo:n => `Zurück zu Level ${n}`, levelDone:n => `Level ${n} geschafft!`,
+  write:'Schreibt hier …', words:(n, m) => `${n} / ${m} Wörter`, wordsOk:n => `${n} Wörter`, checklist:'Prüft euren Text:', answer:'Eure Antwort …',
+  tTrue:'Richtig', tFalse:'Falsch', tapGap:'Tippt auf eine Lücke und dann auf ein Wort.', tapPair:'Tippt links auf einen Begriff und dann rechts auf das Passende.',
+  tapCat:'Tippt auf eine Karte und dann auf die passende Gruppe.', tapOrder:'Tippt die Teile in der richtigen Reihenfolge an.', tapMark:'Tippt die Wörter an.', tapFlip:'Tippt die Karten an, um sie umzudrehen.',
+  stepNext:'Nächste Zeile', stepAll:'Ganzen Dialog zeigen', stepAgain:'Noch einmal Schritt für Schritt', bonus:'Bonus',
+  pw:'Passwort', pwTxt:'Gebt das Klassenpasswort ein.', pwBad:'Das Passwort stimmt nicht. Versucht es noch einmal.', open:'Öffnen', ready:'Fertig? Danach könnt ihr nicht mehr zurück.', readyBtn:'Ergebnis zeigen',
+  done:'Fertig', firstTry:'gleich richtig', afterTries:'nach Verbesserung richtig', withHelp:'mit Lösung', open2:'nicht bearbeitet', fit:'Super, ihr seid fit!', fitTxt:n => `Ihr könnt jetzt zu Level ${n} weitergehen.`, fitGo:n => `Zu Level ${n}`, fitStay:'Noch etwas üben'
+};
+
+// ───────────── Symbole ─────────────
+const P = {
+  star:'<path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.5 1.3 6.6L12 17.2l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>', back:'<path d="M19 12H5M11 6l-6 6 6 6"/>', check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>', x:'<path d="M6 6l12 12M18 6L6 18"/>',
+  clock:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/>', bulb:'<path d="M9 18h6M10 21.5h4M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.6.5.8 1.1.8 1.8V17h6v-.9c0-.7.3-1.3.8-1.8A6.5 6.5 0 0 0 12 2.5z"/>',
+  flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>', trophy:'<path d="M7 4h10v4a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9 17h6v4H9z"/>',
+  book:'<path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 1 6.5 19H20v3H6.5"/>',
+  bank:'<path d="M5 3h11l3 3v15H5zM9 8h6M9 12h6M9 16h4"/>', refresh:'<path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/>', lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  // Stations-Symbole
+  lesen:'<path d="M3 5.5C5.5 4 8.5 4 12 6c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 6v13.5"/>',
+  hoeren:'<path d="M3 15v-3a9 9 0 0 1 18 0v3"/><rect x="2.5" y="14" width="5" height="7" rx="2"/><rect x="16.5" y="14" width="5" height="7" rx="2"/>',
+  schreiben:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4M14 20h6"/>',
+  sprechen:'<path d="M4 5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9l-4 3.5V15H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M19 9h1a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1v3l-3-3h-4"/>',
+  quiz:'<circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.4-2.7 4"/><circle cx="12" cy="17.6" r=".6" fill="currentColor"/>',
+  puzzle:'<path d="M4 8h3.5a2 2 0 1 1 4 0H15v3.5a2 2 0 1 1 0 4V19H4v-3.5a2 2 0 1 0 0-4z"/>',
+  sortieren:'<rect x="3" y="4" width="7" height="16" rx="2"/><rect x="14" y="4" width="7" height="16" rx="2"/><path d="M5.5 8h2M5.5 12h2M16.5 8h2"/>',
+  karten:'<rect x="6" y="3" width="13" height="16" rx="2.5"/><path d="M4 7v12.5A1.5 1.5 0 0 0 5.5 21H15"/>',
+  markieren:'<path d="M9 11l-5 5v4h4l5-5M14.5 4.5l5 5L13 16l-5-5z"/>',
+  luecke:'<rect x="2.5" y="9" width="7" height="6" rx="1.5"/><path d="M12 12h9.5M12 7h9.5M12 17h6"/>',
+  ordnen:'<path d="M8 5h12M8 12h12M8 19h12"/><circle cx="4" cy="5" r="1.2"/><circle cx="4" cy="12" r="1.2"/><circle cx="4" cy="19" r="1.2"/>',
+  musik:'<path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
+  info:'<circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.5"/>'
+};
+const ic = (n, c='ic') => n === 'star' ? `<svg class="st" viewBox="0 0 24 24">${P.star}</svg>` :
+  `<svg class="${c}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${P[n] || P.info}</svg>`;
+const stars = n => `<span class="stars">${Array.from({length:n}, () => ic('star')).join('')}</span>`;
+const TYPSYM = {info:'info', lesetext:'lesen', audio:'hoeren', mc:'quiz', wahr_falsch:'quiz', luecken:'luecke', zuordnen:'puzzle', kategorien:'sortieren',
+  reihenfolge:'ordnen', markieren:'markieren', schreiben:'schreiben', kurzantwort:'schreiben', dialog:'sprechen', karteikarten:'karten'};
+const TILE = ['#F6E3CF', '#DDEBDD', '#DCE7F3', '#FCE9A8', '#EADCF3', '#F9DCDC', '#D9EEEA'];
+
+// ───────────── Mini-Markup: **fett**, *kursiv*, __unterstrichen__, „- “ Liste, Leerzeile = Absatz ─────────────
+function md(s){
+  const inl = t => esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/__(.+?)__/g, '<u>$1</u>').replace(/\*(.+?)\*/g, '<i>$1</i>');
+  return String(s ?? '').replace(/^(#\s.*)$/gm, '\n$1\n').trim().split(/\n\s*\n/).map(par => {
+    const lines = par.split('\n').filter(l => l.trim());
+    if(!lines.length) return '';
+    if(lines.every(l => /^\s*[-•]\s+/.test(l))) return '<ul>' + lines.map(l => `<li>${inl(l.replace(/^\s*[-•]\s+/, ''))}</li>`).join('') + '</ul>';
+    if(/^#\s/.test(par)) return `<h4>${inl(par.replace(/^#\s/, ''))}</h4>`;
+    return '<p>' + lines.map(inl).join('<br>') + '</p>';
+  }).join('');
+}
+// Wortspeicher-Wörter in Texten gepunktet unterstreichen (antippen → Wortspeicher)
+function gloss(html){
+  const W = (APP.wortbank || []).filter(w => w.markieren !== false);
+  if(!W.length) return html;
+  W.forEach((w, i) => {
+    const f = (w.form || w.wort).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    html = html.replace(new RegExp(`(^|[^\\wäöüÄÖÜß>-])(${f})(?![\\wäöüÄÖÜß])(?![^<]*>)`, 'i'), `$1<span class="gl" data-w="${i}">$2</span>`);
+  });
+  return html;
+}
+const img = src => /\.(png|jpe?g|webp|gif|svg)$/i.test(src || '') || /^img:/.test(src || '');
+const imgSrc = s => s.replace(/^img:/, '');
+const item = s => img(s) ? `<img src="${esc(imgSrc(s))}" alt="">` : esc(s);
+
+// ───────────── Zustand ─────────────
+const KEY = 'lernapp-' + META.id;
+let S = null;
+function fresh(){ return {v:1, screen:'intro', names:[], st:0, tk:0, seen:{}, res:{}, left:null, extra:false, end:null, enter:null, fit:{}}; }
+function load(){ try{ const s = JSON.parse(localStorage.getItem(KEY) || 'null'); return s && s.v === 1 ? s : null; }catch(e){ return null; } }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+const R = (si, ti) => (S.res[si + '.' + ti] ||= {});
+
+const Z = () => APP.zeit || {};
+const TOTAL = () => DEV ? 120 : (Z().gesamt || 0) * 60;
+const EXTRA = () => DEV ? 30 : (Z().extra || 0) * 60;
+const MIN = () => DEV ? 10 : (Z().mindest || 0) * 60;
+
+// ───────────── Bausteine ─────────────
+// Jeder Baustein: html() · mount(el) · auto (wird geprüft?) · check() → true/false/Zahl richtig · reveal() · ready() für nicht geprüfte
+const B = {};
+
+B.info = (b) => ({
+  html: () => (b.bild ? `<img class="figure" src="${esc(b.bild)}" alt="">` : '') +
+    (b.merke ? `<div class="merke">${ic('bulb')}<div class="md">${gloss(md(b.text))}</div></div>` : `<div class="md">${gloss(md(b.text))}</div>`)
+});
+
+B.lesetext = (b) => ({
+  html: () => {
+    const paras = String(b.text || '').split(/\n\s*\n/);
+    let n = 0;
+    const body = b.zeilennummern
+      ? paras.map(p => p.split('\n').map(l => `<div class="ln"><i>${(++n % 5 === 0 || n === 1) ? n : ''}</i><span>${gloss(esc(l))}</span></div>`).join('') + '<div style="height:12px"></div>').join('')
+      : paras.map(p => `<p>${gloss(esc(p).replace(/\n/g, '<br>'))}</p>`).join('');
+    return (b.quelle_oben ? `<div class="rhead">${esc(b.quelle_oben)}</div>` : '') + (b.titel_text ? `<div class="rtitle">${esc(b.titel_text)}</div>` : '') +
+      (b.bild ? `<img class="figure" src="${esc(b.bild)}" alt="">` : '') + `<div class="rtext">${body}</div>` +
+      (b.quelle ? `<div class="rhead" style="text-transform:none;letter-spacing:0;font-weight:500">${esc(b.quelle)}</div>` : '');
+  }
+});
+
+B.audio = (b) => ({
+  html: () => {
+    let m = '';
+    if(b.youtube){ const y = b.youtube; m = `<div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/${esc(y.id)}?rel=0&playsinline=1${y.start ? '&start=' + y.start : ''}${y.ende ? '&end=' + y.ende : ''}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>`; }
+    else if(b.datei) m = `<audio controls preload="metadata" src="${esc(b.datei)}"></audio>`;
+    return (b.bild ? `<img class="figure" src="${esc(b.bild)}" alt="">` : '') + m + (b.text ? `<div class="md">${gloss(md(b.text))}</div>` : '');
+  }
+});
+
+B.mc = (b, st) => {
+  const rich = Array.isArray(b.richtig) ? b.richtig : [b.richtig];
+  const multi = rich.length > 1 || b.mehrfach;
+  st.v ||= [];
+  return {
+    auto: true,
+    html: () => (b.bild ? `<img class="figure" src="${esc(b.bild)}" alt="">` : '') +
+      `<div class="opts">${b.optionen.map((o, i) => `<button class="opt" data-i="${i}"><b>${'ABCDEFGH'[i]}</b><span>${item(o)}</span></button>`).join('')}</div>`,
+    mount(el){ $$('.opt', el).forEach(x => x.onclick = () => { if(st.lock) return; const i = +x.dataset.i;
+      st.v = multi ? (st.v.includes(i) ? st.v.filter(k => k !== i) : [...st.v, i]) : [i]; paint(el); clearMarks(el); }); paint(el); },
+    filled: () => st.v.length > 0,
+    check(el){ const ok = same([...st.v].sort(), [...rich].sort());
+      $$('.opt', el).forEach(x => { const i = +x.dataset.i; if(st.v.includes(i)) x.classList.add(rich.includes(i) ? 'ok' : 'bad'); }); return ok; },
+    reveal(el){ $$('.opt', el).forEach(x => { x.classList.remove('bad', 'on'); if(rich.includes(+x.dataset.i)) x.classList.add('ok'); }); },
+  };
+  function paint(el){ $$('.opt', el).forEach(x => x.classList.toggle('on', st.v.includes(+x.dataset.i))); }
+};
+
+B.wahr_falsch = (b, st) => {
+  st.v ||= {};
+  const L = b.labels || [T.tTrue, T.tFalse];
+  return {
+    auto: true,
+    html: () => `<div class="tf">${b.aussagen.map((a, i) => `<div class="tfr" data-i="${i}"><span>${gloss(esc(a.text))}</span><div class="seg"><button data-v="1">${esc(L[0])}</button><button data-v="0">${esc(L[1])}</button></div></div>`).join('')}</div>`,
+    mount(el){ $$('.tfr', el).forEach(r => $$('button', r).forEach(x => x.onclick = () => { if(st.lock) return; st.v[r.dataset.i] = x.dataset.v === '1'; r.classList.remove('ok', 'bad'); paint(el); })); paint(el); },
+    filled: () => b.aussagen.every((a, i) => typeof st.v[i] === 'boolean'),
+    check(el){ let n = 0; $$('.tfr', el).forEach(r => { const i = +r.dataset.i, ok = st.v[i] === !!b.aussagen[i].wahr; n += ok; r.classList.add(ok ? 'ok' : 'bad'); });
+      return n === b.aussagen.length ? true : n; },
+    reveal(el){ b.aussagen.forEach((a, i) => st.v[i] = !!a.wahr); paint(el); $$('.tfr', el).forEach(r => { r.classList.remove('bad'); r.classList.add('ok'); }); },
+  };
+  function paint(el){ $$('.tfr', el).forEach(r => $$('button', r).forEach(x => x.classList.toggle('on', st.v[r.dataset.i] === (x.dataset.v === '1')))); }
+};
+
+// Lückentext: „Tom [went|walked] home.“  – modus "tippen" (Standard) oder "auswahl" (Wortkasten)
+B.luecken = (b, st) => {
+  const parts = String(b.text).split(/(\[[^\]]+\])/);
+  const gaps = parts.filter(p => /^\[.*\]$/.test(p)).map(p => p.slice(1, -1).split('|'));
+  const pick = b.modus === 'auswahl';
+  st.v ||= gaps.map(() => '');
+  const pool = shuffle([...gaps.map(g => g[0]), ...(b.ablenker || [])], gaps.length * 31 + 3);
+  let act = st.v.findIndex(x => !x);
+  return {
+    auto: true,
+    html: () => {
+      let g = -1;
+      const txt = parts.map(p => /^\[.*\]$/.test(p) ? (g++, pick ? `<button class="gslot" data-g="${g}"></button>`
+        : `<input class="gin" data-g="${g}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="width:${Math.max(70, Math.max(...gaps[g].map(x => x.length)) * 13 + 34)}px">`)
+        : esc(p).replace(/\n/g, '<br>')).join('');
+      return `<div class="gtext">${txt}</div>` + (pick ? `<div class="bank">${pool.map((w, i) => `<button class="chip" data-p="${i}">${esc(w)}</button>`).join('')}</div>` : '');
+    },
+    mount(el){
+      if(pick){
+        $$('.gslot', el).forEach(x => x.onclick = () => { if(st.lock) return; const g = +x.dataset.g; if(st.v[g]){ st.v[g] = ''; } act = g; paint(el); clearMarks(el); });
+        $$('.bank .chip', el).forEach(x => x.onclick = () => { if(st.lock) return; let g = act >= 0 && !st.v[act] ? act : st.v.findIndex(v => !v); if(g < 0) return;
+          st.v[g] = pool[+x.dataset.p]; act = st.v.findIndex(v => !v); paint(el); clearMarks(el); });
+      } else {
+        $$('.gin', el).forEach(x => { x.value = st.v[+x.dataset.g] || ''; x.oninput = () => { st.v[+x.dataset.g] = x.value; x.classList.remove('ok', 'bad'); save(); };
+          x.onkeydown = e => { if(e.key === 'Enter'){ e.preventDefault(); const n = $(`.gin[data-g="${+x.dataset.g + 1}"]`, el); n ? n.focus() : x.blur(); } }; });
+      }
+      paint(el);
+    },
+    filled: () => st.v.every(x => String(x).trim()),
+    check(el){ let n = 0; gaps.forEach((g, i) => { const ok = g.some(a => norm(a) === norm(st.v[i])); n += ok;
+        const e = $(`[data-g="${i}"]`, el); e.classList.add(ok ? 'ok' : 'bad'); });
+      return n === gaps.length ? true : n; },
+    reveal(el){ gaps.forEach((g, i) => st.v[i] = g[0]); paint(el); $$('[data-g]', el).forEach(e => { e.classList.remove('bad'); e.classList.add('ok'); if(e.tagName === 'INPUT') e.value = st.v[+e.dataset.g]; }); },
+  };
+  function paint(el){
+    if(!pick) return;
+    $$('.gslot', el).forEach(x => { const g = +x.dataset.g; x.textContent = st.v[g] || ''; x.classList.toggle('f', !!st.v[g]); x.classList.toggle('act', g === act && !st.v[g]); });
+    const used = st.v.slice(); $$('.bank .chip', el).forEach(x => { const w = pool[+x.dataset.p]; const k = used.indexOf(w); x.classList.toggle('used', k >= 0); if(k >= 0) used[k] = null; });
+    save();
+  }
+};
+
+// Zuordnen: paare [["links","rechts"], …] – Bilder mit "img:assets/x.jpg"
+B.zuordnen = (b, st) => {
+  const L = b.paare.map(p => p[0]), Rr = shuffle(b.paare.map((p, i) => i), b.paare.length * 17 + 5);
+  const COL = ['#2F6FEB', '#E5484D', '#22B26B', '#E0A800', '#8E4EC6', '#1F7A7A', '#F76B15', '#D6409F'];
+  st.v ||= {}; let sel = null;
+  return {
+    auto: true,
+    html: () => `<div class="pairs"><div class="pcol">${b.titel_links ? `<h5>${esc(b.titel_links)}</h5>` : ''}${L.map((x, i) => `<button class="pit" data-l="${i}"><i></i><span>${item(x)}</span></button>`).join('')}</div>
+      <div class="pcol">${b.titel_rechts ? `<h5>${esc(b.titel_rechts)}</h5>` : ''}${Rr.map(i => `<button class="pit" data-r="${i}"><i></i><span>${item(b.paare[i][1])}</span></button>`).join('')}</div></div>`,
+    mount(el){
+      $$('[data-l]', el).forEach(x => x.onclick = () => { if(st.lock) return; const i = +x.dataset.l; if(st.v[i] != null){ delete st.v[i]; sel = i; } else sel = sel === i ? null : i; paint(el); clearMarks(el); });
+      $$('[data-r]', el).forEach(x => x.onclick = () => { if(st.lock) return; const r = +x.dataset.r; const owner = Object.keys(st.v).find(k => st.v[k] === r);
+        if(owner != null){ delete st.v[owner]; paint(el); clearMarks(el); return; }
+        if(sel == null){ toast(T.tapPair); return; } st.v[sel] = r; sel = null; paint(el); clearMarks(el); });
+      paint(el);
+    },
+    filled: () => L.every((_, i) => st.v[i] != null),
+    check(el){ let n = 0; L.forEach((_, i) => { const ok = st.v[i] === i; n += ok; $(`[data-l="${i}"]`, el).classList.add(ok ? 'ok' : 'bad'); $(`[data-r="${st.v[i]}"]`, el)?.classList.add(ok ? 'ok' : 'bad'); });
+      return n === L.length ? true : n; },
+    reveal(el){ L.forEach((_, i) => st.v[i] = i); paint(el); $$('.pit', el).forEach(x => { x.classList.remove('bad'); x.classList.add('ok'); }); },
+  };
+  function paint(el){
+    $$('[data-l]', el).forEach(x => { const i = +x.dataset.l, has = st.v[i] != null; const c = has ? COL[i % COL.length] : '';
+      x.classList.toggle('on', sel === i); const d = $('i', x); d.style.background = c || '#fff'; d.textContent = has ? i + 1 : ''; });
+    $$('[data-r]', el).forEach(x => { const r = +x.dataset.r, owner = Object.keys(st.v).find(k => st.v[k] === r); const d = $('i', x);
+      d.style.background = owner != null ? COL[owner % COL.length] : '#fff'; d.textContent = owner != null ? +owner + 1 : ''; });
+    save();
+  }
+};
+
+// Kategorien: gruppen ["A","B"], elemente [["Text", 0], …]
+B.kategorien = (b, st) => {
+  const E = b.elemente, order = shuffle(E.map((_, i) => i), E.length * 13 + 1);
+  st.v ||= {}; let sel = null;
+  return {
+    auto: true,
+    html: () => `<div class="bank pool0">${order.map(i => `<button class="chip" data-e="${i}">${item(E[i][0])}</button>`).join('')}</div>
+      <div class="cats">${b.gruppen.map((g, k) => `<div class="cat" data-k="${k}" role="button"><h5><i style="background:${['#2F6FEB','#E5484D','#22B26B','#E0A800','#8E4EC6'][k % 5]}"></i>${esc(g)}</h5></div>`).join('')}</div>`,
+    mount(el){ this.el = el; paint(el); },
+    filled: () => E.every((_, i) => st.v[i] != null),
+    check(el){ let n = 0; E.forEach((e, i) => { const ok = st.v[i] === e[1]; n += ok; $(`.cat [data-e="${i}"]`, el)?.classList.add(ok ? 'ok' : 'bad'); }); return n === E.length ? true : n; },
+    reveal(el){ E.forEach((e, i) => st.v[i] = e[1]); paint(el); $$('.cat .chip', el).forEach(x => x.classList.add('ok')); },
+  };
+  function paint(el){
+    const pool = $('.pool0', el);
+    order.forEach(i => { const c = $(`[data-e="${i}"]`, el); const tgt = st.v[i] != null ? $(`.cat[data-k="${st.v[i]}"]`, el) : pool; if(c.parentNode !== tgt) tgt.appendChild(c); c.classList.toggle('on', sel === i); });
+    pool.style.display = order.some(i => st.v[i] == null) ? '' : 'none';
+    $$('.cat', el).forEach(c => c.classList.toggle('armed', sel != null));
+    $$('[data-e]', el).forEach(x => x.onclick = ev => { ev.stopPropagation(); if(st.lock) return; const i = +x.dataset.e;
+      if(st.v[i] != null){ delete st.v[i]; sel = i; } else sel = sel === i ? null : i; clearMarks(el); paint(el); });
+    $$('.cat', el).forEach(c => c.onclick = () => { if(st.lock) return; if(sel == null){ toast(T.tapCat); return; } st.v[sel] = +c.dataset.k;
+      sel = null; clearMarks(el); paint(el); });
+    save();
+  }
+};
+
+// Reihenfolge: elemente in richtiger Reihenfolge; modus "satz" (nebeneinander) oder "liste" (untereinander)
+B.reihenfolge = (b, st) => {
+  const E = b.elemente, list = b.modus === 'liste';
+  const mix = shuffle(E.map((_, i) => i), E.length * 7 + 11);
+  if(same(mix, E.map((_, i) => i))) mix.reverse();
+  st.v ||= [];
+  return {
+    auto: true,
+    html: () => `<div class="olabel">${EN ? 'Your order' : (APP.namen ?? 2) === 1 ? 'Deine Reihenfolge' : 'Eure Reihenfolge'}</div><div class="order ${list ? 'list' : ''}"></div><div class="pool ${list ? 'list' : ''}"></div>`,
+    mount(el){ paint(el); },
+    filled: () => st.v.length === E.length,
+    check(el){ const ok = st.v.every((x, i) => E[x] === E[i]); // gleiche Texte gelten als gleich
+      $('.order', el).classList.add(ok ? 'ok' : 'bad');
+      if(!ok) $$('.order .chip', el).forEach((c, i) => c.classList.add(E[st.v[i]] === E[i] ? 'ok' : 'bad'));
+      return ok ? true : st.v.filter((x, i) => E[x] === E[i]).length; },
+    reveal(el){ st.v = E.map((_, i) => i); paint(el); $('.order', el).classList.remove('bad'); $('.order', el).classList.add('ok'); },
+  };
+  function paint(el){
+    const o = $('.order', el), p = $('.pool', el);
+    o.innerHTML = st.v.map((i, k) => `<button class="chip" data-o="${k}">${list ? `<b>${k + 1}</b>` : ''}<span>${item(E[i])}</span></button>`).join('');
+    p.innerHTML = mix.filter(i => !st.v.includes(i)).map(i => `<button class="chip" data-p="${i}">${item(E[i])}</button>`).join('');
+    $$('[data-o]', o).forEach(x => x.onclick = () => { if(st.lock) return; st.v.splice(+x.dataset.o, 1); o.classList.remove('ok', 'bad'); paint(el); });
+    $$('[data-p]', p).forEach(x => x.onclick = () => { if(st.lock) return; st.v.push(+x.dataset.p); o.classList.remove('ok', 'bad'); paint(el); });
+    save();
+  }
+};
+
+// Markieren: Zielwörter in [eckigen Klammern]; alle Wörter sind antippbar
+B.markieren = (b, st) => {
+  const toks = []; String(b.text).split(/(\[[^\]]+\]|\s+)/).forEach(p => { if(!p) return;
+    if(/^\s+$/.test(p)) toks.push({sp:p}); else if(/^\[.*\]$/.test(p)) toks.push({w:p.slice(1, -1), t:1}); else toks.push({w:p, t:0}); });
+  st.v ||= [];
+  return {
+    auto: true,
+    html: () => `<div class="mtext">${toks.map((t, i) => t.sp ? (t.sp.includes('\n') ? '<br>' : ' ') : `<span class="tok" data-t="${i}">${esc(t.w)}</span>`).join('')}</div>`,
+    mount(el){ $$('.tok', el).forEach(x => x.onclick = () => { if(st.lock) return; const i = +x.dataset.t; st.v = st.v.includes(i) ? st.v.filter(k => k !== i) : [...st.v, i]; clearMarks(el); paint(el); }); paint(el); },
+    filled: () => st.v.length > 0,
+    check(el){ const tg = toks.map((t, i) => t.t ? i : -1).filter(i => i >= 0); let n = 0, wrong = 0;
+      $$('.tok', el).forEach(x => { const i = +x.dataset.t, on = st.v.includes(i); if(on && toks[i].t){ x.classList.add('ok'); n++; } else if(on){ x.classList.add('bad'); wrong++; } });
+      return n === tg.length && !wrong ? true : Math.max(0, n - wrong); },
+    reveal(el){ st.v = toks.map((t, i) => t.t ? i : -1).filter(i => i >= 0); paint(el); $$('.tok', el).forEach(x => { x.classList.remove('bad'); if(st.v.includes(+x.dataset.t)) x.classList.add('ok'); }); },
+  };
+  function paint(el){ $$('.tok', el).forEach(x => x.classList.toggle('on', st.v.includes(+x.dataset.t))); save(); }
+};
+
+// Schreiben: offen, keine Prüfung; mindestwoerter, satzanfaenge, checkliste
+B.schreiben = (b, st) => {
+  st.v ||= ''; st.c ||= [];
+  const cnt = () => (st.v.trim().match(/\S+/g) || []).length;
+  return {
+    html: () => (b.satzanfaenge ? `<div class="starters">${b.satzanfaenge.map((s, i) => `<button class="chip" data-s="${i}">${esc(s)}</button>`).join('')}</div>` : '') +
+      `<div class="wr"><textarea rows="${b.zeilen || 5}" placeholder="${esc(b.platzhalter || T.write)}"></textarea></div>` +
+      (b.mindestwoerter ? `<div class="wcount"></div>` : '') +
+      (b.checkliste ? `<div class="olabel" style="margin-top:14px">${T.checklist}</div><div class="check">${b.checkliste.map((c, i) => `<button data-c="${i}"><i>${ic('check')}</i><span>${esc(c)}</span></button>`).join('')}</div>` : ''),
+    mount(el){ const ta = $('textarea', el); ta.value = st.v;
+      ta.oninput = () => { st.v = ta.value; paint(el); save(); };
+      $$('[data-s]', el).forEach(x => x.onclick = () => { const s = b.satzanfaenge[+x.dataset.s]; ta.value = (ta.value && !/\s$/.test(ta.value) ? ta.value + ' ' : ta.value) + s + ' '; st.v = ta.value; ta.focus(); paint(el); save(); });
+      $$('[data-c]', el).forEach(x => x.onclick = () => { const i = +x.dataset.c; st.c = st.c.includes(i) ? st.c.filter(k => k !== i) : [...st.c, i]; paint(el); save(); });
+      paint(el); },
+    ready: () => cnt() >= (b.mindestwoerter || 1) && (!b.checkliste || st.c.length === b.checkliste.length),
+    text: () => st.v,
+  };
+  function paint(el){ const w = $('.wcount', el), n = cnt(); if(w){ w.textContent = n >= b.mindestwoerter ? T.wordsOk(n) : T.words(n, b.mindestwoerter); w.classList.toggle('ok', n >= b.mindestwoerter); }
+    $$('[data-c]', el).forEach(x => x.classList.toggle('on', st.c.includes(+x.dataset.c))); updFoot(); }
+};
+
+// Kurzantwort: ein Eingabefeld, antworten = erlaubte Lösungen
+B.kurzantwort = (b, st) => {
+  st.v ||= '';
+  return {
+    auto: true,
+    html: () => (b.bild ? `<img class="figure" src="${esc(b.bild)}" alt="">` : '') + `<div class="sa"><input autocomplete="off" autocorrect="off" spellcheck="false" placeholder="${esc(b.platzhalter || T.answer)}"></div>`,
+    mount(el){ const x = $('input', el); x.value = st.v; x.oninput = () => { st.v = x.value; x.classList.remove('ok', 'bad'); save(); updFoot(); };
+      x.onkeydown = e => { if(e.key === 'Enter'){ e.preventDefault(); x.blur(); $('#chk')?.click(); } }; },
+    filled: () => !!st.v.trim(),
+    check(el){ const ok = b.antworten.some(a => norm(a) === norm(st.v)); $('input', el).classList.add(ok ? 'ok' : 'bad'); return ok; },
+    reveal(el){ st.v = b.antworten[0]; const x = $('input', el); x.value = st.v; x.classList.remove('bad'); x.classList.add('ok'); },
+    text: () => st.v,
+  };
+};
+
+// Dialog: rollen {A:{name, bild}, B:{…}}, zeilen [{r:"A", text:"Hello [Tom]!", de:"…"}], modus "schritt" | "luecken" | "deutsch" | "lesen"
+B.dialog = (b, st) => {
+  const keys = Object.keys(b.rollen), COLS = ['#E5484D', '#1F7A7A', '#2F6FEB', '#8E4EC6'];
+  const col = r => b.rollen[r].farbe || COLS[keys.indexOf(r) % COLS.length];
+  const stud = r => (S.names || [])[keys.indexOf(r)] || '';
+  const av = r => b.rollen[r].bild ? `<img class="av" style="--c:${col(r)}" src="${esc(b.rollen[r].bild)}" alt="">` : `<span class="dot" style="--c:${col(r)}">${esc(b.rollen[r].name[0])}</span>`;
+  const plain = t => esc(t).replace(/\[([^\]]+)\]/g, '$1');
+  const line = z => b.modus === 'luecken' ? esc(z.text).replace(/\[([^\]]+)\]/g, (m, w) => `<span class="blk" style="--len:${w.length}"></span>`) : b.modus === 'deutsch' ? esc(z.de || '') : gloss(plain(z.text));
+  st.i ??= b.modus === 'schritt' ? 0 : -1;
+  return {
+    html: () => `<div class="dyn"></div>`,
+    mount(el){ paint(el); },
+    ready: () => b.modus !== 'schritt' || st.i < 0 || st.i >= b.zeilen.length - 1,
+  };
+  function paint(el){
+    const d = $('.dyn', el);
+    if(st.i >= 0){ // Schritt für Schritt
+      const z = b.zeilen[st.i], left = keys.indexOf(z.r) % 2 === 0;
+      d.innerHTML = `<div class="bstage"><div class="bprog">${b.zeilen.map((_, k) => `<i class="${k <= st.i ? 'd' : ''}"></i>`).join('')}</div>
+        <div class="bubble ${left ? 'l' : 'r'}" style="--c:${col(z.r)}"><div class="bwho">${av(z.r)}${esc(b.rollen[z.r].name)} <em>${esc(stud(z.r))}</em></div>${line(z)}</div></div>
+        <div class="tfoot" style="border:0;padding-top:0"><button class="btn light sm" id="dAll">${T.stepAll}</button><span class="sp"></span>
+        ${st.i > 0 ? `<button class="btn light sm" id="dPrev">${ic('back')}</button>` : ''}${st.i < b.zeilen.length - 1 ? `<button class="btn dark sm" id="dNext">${T.stepNext} ${ic('arrow')}</button>` : ''}</div>`;
+      $('#dNext', d) && ($('#dNext', d).onclick = () => { st.i++; save(); paint(el); updFoot(); });
+      $('#dPrev', d) && ($('#dPrev', d).onclick = () => { st.i--; save(); paint(el); });
+      $('#dAll', d).onclick = () => { st.i = -1; save(); paint(el); updFoot(); };
+    } else {
+      d.innerHTML = `<div class="dbox">${b.zeilen.map(z => `<div class="dl" style="--c:${col(z.r)}"><span class="who">${av(z.r)}${esc(b.rollen[z.r].name)} <em>${esc(stud(z.r))}</em></span><span class="tx">${line(z)}</span></div>`).join('')}</div>` +
+        (b.modus === 'schritt' ? `<div class="tfoot" style="border:0"><button class="btn light sm" id="dAgain">${ic('refresh')} ${T.stepAgain}</button></div>` : '');
+      $('#dAgain', d) && ($('#dAgain', d).onclick = () => { st.i = 0; save(); paint(el); });
+    }
+    bindGloss(d);
+  }
+};
+
+// Karteikarten: karten [{vorne, hinten}] – fertig, wenn alle einmal umgedreht
+B.karteikarten = (b, st) => {
+  st.v ||= [];
+  return {
+    html: () => `<div class="cards">${b.karten.map((k, i) => `<button class="fc" data-k="${i}"><div class="in"><div class="fa">${item(k.vorne)}</div><div class="ba">${item(k.hinten)}</div></div></button>`).join('')}</div>`,
+    mount(el){ $$('.fc', el).forEach(x => { const i = +x.dataset.k; x.classList.toggle('seen', st.v.includes(i));
+      x.onclick = () => { x.classList.toggle('flip'); if(!st.v.includes(i)){ st.v.push(i); x.classList.add('seen'); save(); updFoot(); } }; }); },
+    ready: () => st.v.length >= b.karten.length,
+  };
+};
+
+function clearMarks(el){ $$('.ok,.bad,.miss', el).forEach(x => { if(!x.classList.contains('btn')) x.classList.remove('ok', 'bad', 'miss'); }); const f = $('#fb'); if(f && !f.classList.contains('tipbox')) f.remove(); updFoot(); }
+
+// ───────────── Ablauf ─────────────
+const ST = () => APP.stationen;
+const task = (si, ti) => ST()[si].bausteine[ti];
+let CUR = null; // aktueller Baustein-Controller
+
+function reset(){ closeSheet(); window.scrollTo(0, 0); }
+function goBrief(n){ S.screen = 'brief'; S.st = n; save(); reset(); render(); }
+function goStation(n, t=0){ S.screen = 'station'; S.st = n; S.tk = t; if(!S.enter || S.enter.n !== n) S.enter = {n, t:Date.now()}; save(); reset(); render(); }
+function enterStation(n){ const s = ST()[n]; if(s.erklaerung && !S.seen[n]) goBrief(n); else goStation(n, firstOpen(n)); }
+function firstOpen(n){ const k = ST()[n].bausteine.findIndex((_, t) => !R(n, t).done); return k < 0 ? 0 : k; }
+function render(){ renderTop(); ({intro:rIntro, resume:rResume, brief:rBrief, station:rStation, report:rReport}[S.screen] || rIntro)(); devMenu(); }
+
+function renderTop(){
+  const t = $('#top');
+  if(S.screen === 'intro' || S.screen === 'resume'){ t.className = 'top hide'; return; }
+  t.className = 'top';
+  const nm = (S.names || []).filter(Boolean).join(' & ') || META.kurz || '';
+  const steps = ST().map((s, i) => { const done = s.bausteine.every((_, k) => R(i, k).done); const cur = S.screen !== 'report' && S.st === i;
+    return `<div class="step ${cur ? 'cur' : ''} ${done && !cur ? 'done' : ''}"><span class="mk">${done && !cur ? ic('check') : stars(s.sterne || i + 1)}</span><span>${esc(s.kurz || s.titel)}</span></div>`; }).join('') +
+    `<div class="step ${S.screen === 'report' ? 'cur' : ''}"><span class="mk">${ic('trophy')}</span><span>${esc(T.results)}</span></div>`;
+  t.innerHTML = `<div class="team"><span class="logo">${ic(APP.symbol || 'star')}</span><span>${esc(nm)}</span></div><div class="steps">${steps}</div>` +
+    ((APP.wortbank || []).length ? `<button class="wbtn" id="wb">${ic('bank')}<span>${T.bank}</span></button>` : '') +
+    (TOTAL() && S.screen !== 'report' ? `<div class="timer" id="timer">${ic('clock')}<span>--:--</span></div>` : '');
+  $('#wb') && ($('#wb').onclick = () => showBank());
+  tick();
+}
+
+// Timer
+function tick(){
+  if(!TOTAL() || !S.end || S.screen === 'report') return;
+  const left = (S.end - Date.now()) / 1000, el = $('#timer');
+  if(el){ $('span', el).textContent = fmt(left); el.classList.toggle('warn', left <= 180 && left > 60); el.classList.toggle('crit', left <= 60); }
+  if(S.screen === 'station' && MIN() && S.enter && !S.fit[S.st] && S.st < ST().length - 1 && Date.now() - S.enter.t > MIN() * 1000){
+    S.fit[S.st] = 1; save();
+    sheet(`<div class="badge-ic">${ic('star')}</div><h2>${T.fit}</h2><p>${T.fitTxt(S.st + 2)}</p><div class="sh-btns"><button class="btn light" data-a="close">${T.fitStay}</button><button class="btn dark" data-a="fitgo">${T.fitGo(S.st + 2)} ${ic('arrow')}</button></div>`);
+  }
+  if(left <= 0) timeUp();
+}
+function timeUp(){
+  if($('#ovl').classList.contains('open') && $('#sheet').dataset.k === 'tu') return;
+  if(EXTRA() && !S.extra){ sheet(`<div class="badge-ic">${ic('clock')}</div><h2>${T.timeup}</h2><p>${T.more(Math.round(EXTRA() / 60))}</p><div class="sh-btns"><button class="btn light" data-a="end">${T.no}</button><button class="btn dark" data-a="extra">${T.yes(Math.round(EXTRA() / 60))}</button></div>`); $('#sheet').dataset.k = 'tu'; }
+  else { S.screen = 'report'; save(); reset(); render(); toast(T.timeup2, 3500); }
+}
+
+// Start
+function heroBg(){ return {deutsch:'#FFC2BB', englisch:'#FFF3B0', musik:'#F6DDF2', wib:'#E3E7EA'}[META.fach] || '#eee'; }
+function heroArt(){
+  const f = META.fach;
+  const c = {deutsch:['#FF8B80', '#FFC2BB', '#E9695E'], englisch:['#FFE680', '#FFF3B0', '#F2C230'], musik:['#E7A8DF', '#F6DDF2', '#C46BB8'], wib:['#BFC8CF', '#E3E7EA', '#7D8B96']}[f] || ['#ddd', '#eee', '#bbb'];
+  const glyph = {
+    deutsch:`<text x="160" y="250" font-family="Georgia,serif" font-size="210" font-weight="700" fill="#fff" opacity=".95">Aa</text><path d="M430 120l70-70 26 26-70 70-38 12z" fill="#1B1B1E"/><path d="M120 330h360M120 370h300M120 410h330" stroke="#fff" stroke-width="14" stroke-linecap="round" opacity=".8"/>`,
+    englisch:`<rect x="90" y="90" width="300" height="130" rx="40" fill="#fff"/><path d="M150 215l-10 50 50-46z" fill="#fff"/><text x="132" y="178" font-family="Inter,Arial" font-size="64" font-weight="800" fill="#1B1B1E">Hello!</text><rect x="260" y="260" width="300" height="130" rx="40" fill="#1B1B1E"/><path d="M490 385l14 50-56-46z" fill="#1B1B1E"/><text x="300" y="348" font-family="Inter,Arial" font-size="64" font-weight="800" fill="${c[0]}">Hi there</text>`,
+    musik:`<g stroke="#fff" stroke-width="6" opacity=".9">${[0, 1, 2, 3, 4].map(k => `<path d="M40 ${170 + k * 34}h560"/>`).join('')}</g><g fill="#1B1B1E"><ellipse cx="190" cy="340" rx="34" ry="25" transform="rotate(-20 190 340)"/><rect x="218" y="150" width="9" height="190"/><ellipse cx="360" cy="306" rx="34" ry="25" transform="rotate(-20 360 306)"/><rect x="388" y="120" width="9" height="186"/><ellipse cx="480" cy="272" rx="34" ry="25" transform="rotate(-20 480 272)"/><rect x="508" y="120" width="9" height="152"/><path d="M392 120h125v34H392z"/></g>`,
+    wib:`<g fill="#fff"><rect x="110" y="270" width="70" height="150" rx="12"/><rect x="210" y="210" width="70" height="210" rx="12"/><rect x="310" y="150" width="70" height="270" rx="12" fill="#1B1B1E"/><rect x="410" y="230" width="70" height="190" rx="12"/></g><circle cx="500" cy="130" r="62" fill="#fff"/><text x="470" y="155" font-family="Inter,Arial" font-size="72" font-weight="800" fill="#1B1B1E">€</text><path d="M90 430h420" stroke="#1B1B1E" stroke-width="8" stroke-linecap="round"/>`
+  }[f] || '';
+  return `<svg viewBox="0 0 640 480" preserveAspectRatio="xMidYMid meet"><rect width="640" height="480" fill="${c[1]}"/><circle cx="120" cy="80" r="190" fill="${c[0]}" opacity=".55"/><circle cx="560" cy="460" r="220" fill="${c[0]}" opacity=".45"/><circle cx="420" cy="60" r="60" fill="${c[2]}" opacity=".35"/>${glyph}</svg>`;
+}
+function tiles(){
+  return ST().map((s, i) => `<div class="lvmini ${s.bonus ? 'bonus' : ''}" style="--c:${TILE[i % TILE.length]};--bonus:'${T.bonus}'"><div class="ico">${ic(s.symbol || TYPSYM[(s.bausteine.find(b => b.typ !== 'info') || s.bausteine[0]).typ] || 'star', 'x')}</div><span><span class="stars">${stars(s.sterne || i + 1)}</span>${esc(s.kurz || s.titel)}</span></div>`).join('');
+}
+function rIntro(){
+  const n = APP.namen ?? 2;
+  const labels = APP.namen_labels || (n === 1 ? [T.names1] : Array.from({length:n}, (_, i) => `${T.partner} ${i + 1}`));
+  $('#view').innerHTML = `
+    <section class="hero" ${APP.bild ? `style="background-image:url('${esc(APP.bild)}')"` : ''}>${APP.bild ? '' : `<div class="art" style="--artbg:${heroBg()}">${heroArt()}</div>`}
+      <div class="hero-in"><div class="eyebrow"><b></b>${esc(APP.kicker || META.kicker || '')}</div><h1>${esc(META.frage)}</h1>${APP.untertitel ? `<p>${esc(APP.untertitel)}</p>` : ''}</div></section>
+    <div class="startrow">
+      <div><div class="lvlist">${tiles()}</div>${TOTAL() ? `<div class="rules">${T.minutes(Math.round(TOTAL() / 60))}</div>` : ''}</div>
+      <div class="go-card"><h3>${esc(APP.auftrag || '')}</h3>${APP.ziel ? `<div class="goal">${ic('flag')}<span><b>${T.goal}</b> ${esc(APP.ziel)}</span></div>` : ''}
+        ${labels.map((l, i) => `<div class="namerow"><label>${esc(l)}</label><input class="tin" data-n="${i}" placeholder="${T.name}" maxlength="20" autocomplete="off"></div>`).join('')}
+        <button class="btn dark big" id="go" ${n ? 'disabled' : ''}>${T.start} ${ic('arrow')}</button></div>
+    </div>`;
+  const ins = $$('.tin'); const upd = () => $('#go').disabled = ins.some(x => !x.value.trim());
+  ins.forEach(x => { x.oninput = upd; x.onkeydown = e => { if(e.key === 'Enter') x.blur(); }; });
+  $('#go').onclick = () => { S.names = ins.map(x => x.value.trim()); if(TOTAL()) S.end = Date.now() + TOTAL() * 1000; save(); enterStation(0); };
+}
+function rResume(){
+  $('#view').innerHTML = `<div class="ask"><div class="badge-ic">${ic('star')}</div><h2>${T.welcome}</h2><p>${esc((S.names || []).filter(Boolean).join(' & '))}</p>
+    <div class="row"><button class="btn light" data-a="restart">${ic('refresh')} ${T.again}</button><button class="btn dark" data-a="resume">${T.cont} ${ic('arrow')}</button></div></div>`;
+}
+function rBrief(){
+  const n = S.st, s = ST()[n];
+  $('#view').innerHTML = `<div class="brief"><div class="pic" style="--c:${TILE[n % TILE.length]}"><span class="lbadge">${stars(s.sterne || n + 1)}</span><div class="ico">${ic(s.symbol || TYPSYM[(s.bausteine.find(b => b.typ !== 'info') || s.bausteine[0]).typ] || 'star', 'x')}</div></div>
+    <div class="txt"><div class="kick">${T.level} ${n + 1}</div><h2>${esc(s.titel)}</h2>
+      <ol>${s.erklaerung.map((e, i) => `<li><b class="n">${i + 1}</b><span>${esc(e)}</span></li>`).join('')}</ol>
+      ${s.ziel ? `<div class="goal">${ic('flag')}<span>${esc(s.ziel)}</span></div>` : ''}
+      <button class="btn dark big go" data-a="startst">${T.startLvl(n + 1)} ${ic('arrow')}</button></div></div>`;
+}
+function rStation(){
+  const n = S.st, s = ST()[n], t = S.tk, b = s.bausteine[t], st = R(n, t);
+  const v = $('#view');
+  const mat = s.material ? (Array.isArray(s.material) ? s.material : [s.material]) : null;
+  v.innerHTML = `<div class="lhead"><div class="lt"><span class="lbadge">${stars(s.sterne || n + 1)}</span><div><b>${T.level} ${n + 1} · ${esc(s.titel)}</b>${s.auftrag ? `<small>${esc(s.auftrag)}</small>` : ''}</div></div>
+      <div class="lacts">${n > 0 ? `<button class="btn light sm" data-a="prevst">${ic('back')} ${T.backTo(n)}</button>` : ''}</div></div>
+    <div class="sgrid ${mat ? 'mat' : ''}">${mat ? `<div class="matcard">${mat.map(m => B[m.typ](m, {}).html()).join('<div style="height:14px"></div>')}</div>` : ''}
+      <div><div class="pips">${s.bausteine.map((_, k) => `<button class="${k === t ? 'c' : R(n, k).done ? 'd' : ''}" data-k="${k}" aria-label="${k + 1}"></button>`).join('')}</div>
+      <div class="task" id="task"><div class="thead"><h3>${esc(b.titel || '')}</h3><span class="tnum">${t + 1} / ${s.bausteine.length}</span></div>
+      ${b.aufgabe ? `<div class="tq">${gloss(md(b.aufgabe))}</div>` : ''}<div id="tb"></div><div id="fbw"></div><div class="tfoot" id="tf"></div></div></div></div>`;
+  CUR = B[b.typ](b, st);
+  $('#tb').innerHTML = CUR.html();
+  CUR.mount && CUR.mount($('#tb'));
+  ['click', 'input'].forEach(ev => $('#tb').addEventListener(ev, () => setTimeout(updFoot), true));
+  if(st.done && CUR.auto){ st.lock = true; st.how === 'help' ? CUR.reveal($('#tb')) : CUR.check($('#tb')); }
+  $$('.pips button').forEach(x => x.onclick = () => { const k = +x.dataset.k; if(k <= t || R(n, k).done || R(n, k - 1).done){ S.tk = k; save(); reset(); render(); } });
+  bindGloss(v);
+  updFoot();
+}
+function updFoot(){
+  const f = $('#tf'); if(!f || !CUR) return;
+  const n = S.st, t = S.tk, s = ST()[n], b = s.bausteine[t], st = R(n, t);
+  const last = t === s.bausteine.length - 1, lastSt = n === ST().length - 1;
+  const nextLbl = last ? (lastSt ? T.finish : `${T.level} ${n + 2}`) : T.next;
+  let h = (t > 0 ? `<button class="btn light sm" data-a="prevt">${ic('back')} ${T.back}</button>` : '') + (b.tipp ? `<button class="btn tip sm" data-a="tip">${ic('bulb')} ${T.tip}</button>` : '') + '<span class="sp"></span>';
+  if(CUR.auto && !st.done){
+    if((st.tries || 0) >= 2) h += `<button class="btn light sm" data-a="reveal">${T.solution}</button>`;
+    h += `<button class="btn dark" id="chk" data-a="check" ${CUR.filled && !CUR.filled() ? 'disabled' : ''}>${ic('check')} ${T.check}</button>`;
+  } else {
+    const ok = CUR.auto ? true : (CUR.ready ? CUR.ready() : true);
+    h += `<button class="btn ${st.done && CUR.auto ? 'okb appear' : 'dark'}" data-a="nextt" ${ok ? '' : 'disabled'}>${nextLbl} ${ic('arrow')}</button>`;
+  }
+  f.innerHTML = h;
+}
+function feedback(kind, html){ $('#fbw').innerHTML = `<div class="fb ${kind}" id="fb">${html}</div>`; }
+function doCheck(){
+  const n = S.st, t = S.tk, st = R(n, t), el = $('#tb');
+  if(CUR.filled && !CUR.filled()){ toast(T.complete); return; }
+  const r = CUR.check(el);
+  st.tries = (st.tries || 0) + 1;
+  if(r === true){
+    st.done = true; st.lock = true; st.how = st.tries === 1 ? 'first' : 'tries'; save();
+    feedback('ok', `${ic('check')} ${T.right[Math.floor(Math.random() * T.right.length)]}`); confetti(st.tries === 1 ? 1 : .5);
+  } else {
+    save(); $('#task').classList.remove('shake'); void $('#task').offsetWidth; $('#task').classList.add('shake');
+    const b = task(n, t);
+    feedback('bad', `${ic('x')} ${typeof r === 'number' && r > 0 ? T.partly(r) : (st.tries >= 2 && b.tipp ? T.wrong2 : T.wrong)}`);
+  }
+  updFoot();
+}
+function nextTask(){
+  const n = S.st, t = S.tk, s = ST()[n], st = R(n, t);
+  if(!CUR.auto){ st.done = true; st.how = 'open'; if(CUR.text) st.text = CUR.text(); }
+  save();
+  if(t < s.bausteine.length - 1){ S.tk = t + 1; save(); reset(); render(); return; }
+  if(n < ST().length - 1){ toast(T.levelDone(n + 1)); confetti(1.2); enterStation(n + 1); return; }
+  sheet(`<div class="badge-ic">${ic('trophy')}</div><h2>${T.ready}</h2><div class="sh-btns"><button class="btn light" data-a="close">${T.back}</button><button class="btn dark" data-a="report">${T.readyBtn} ${ic('arrow')}</button></div>`);
+}
+
+// Bericht
+function rReport(){
+  let all = 0, ok = 0;
+  const cards = ST().map((s, n) => {
+    const rows = s.bausteine.map((b, t) => {
+      if(['info', 'lesetext', 'audio'].includes(b.typ)) return '';
+      const r = R(n, t), auto = !!B[b.typ](b, JSON.parse(JSON.stringify(r))).auto;
+      let m = 'd', lab = T.open2, icn = 'x';
+      if(r.done){ if(!auto){ m = 'a'; lab = T.done; icn = 'check'; } else if(r.how === 'first'){ m = 'a'; lab = T.firstTry; icn = 'check'; } else if(r.how === 'tries'){ m = 'b'; lab = T.afterTries; icn = 'check'; } else { m = 'c'; lab = T.withHelp; icn = 'bulb'; } }
+      if(auto){ all++; if(r.done && r.how !== 'help') ok++; }
+      const txt = r.text || (b.typ === 'schreiben' || b.typ === 'kurzantwort' ? r.v : '');
+      return `<div class="rrow"><span class="m ${m}">${ic(icn)}</span><div><b>${esc(b.titel || '')}</b> <span style="color:var(--muted)">· ${lab}</span>${txt ? `<blockquote>${esc(txt)}</blockquote>` : ''}</div></div>`;
+    }).join('');
+    return rows ? `<div class="rcard"><h4>${stars(s.sterne || n + 1)} ${T.level} ${n + 1} · ${esc(s.titel)}</h4>${rows}</div>` : '';
+  }).join('');
+  const A = APP.abschluss || {};
+  $('#view').innerHTML = `<div class="ask"><div class="badge-ic">${ic('trophy')}</div><h2>${esc(A.titel || (EN ? 'Well done' : 'Geschafft') + ((S.names || []).filter(Boolean).length ? ', ' + S.names.filter(Boolean).join(' & ') : '') + '!')}</h2>
+    ${all ? `<div class="score">${ic('check')} ${T.resultsOf(ok, all)}</div>` : ''}<p style="margin-top:14px">${esc(A.text || T.show)}</p></div>
+    <div class="rep">${cards}</div><div style="text-align:center;margin-top:18px"><button class="linkbtn" data-a="restart">${T.again}</button></div>`;
+  if(!S.party){ S.party = 1; save(); confetti(2); }
+}
+
+// Wortspeicher
+function bindGloss(root){ $$('.gl', root).forEach(g => g.onclick = e => { e.stopPropagation(); showBank(+g.dataset.w); }); }
+function showBank(sel){
+  const W = APP.wortbank || [];
+  sheet(`<div class="shead"><h2>${T.bank}</h2><button class="ib" data-a="close">${ic('x')}</button></div><div class="wgrid">${W.length ? W.map((w, i) =>
+    `<div class="wcard ${i === sel ? 'sel' : ''}" id="w${i}"><div class="w-en">${esc(w.wort)}</div><div class="w-de">${esc(w.bedeutung || '')}</div>${w.beispiel ? `<div class="w-ex">${esc(w.beispiel)}</div>` : ''}</div>`).join('') : T.bankEmpty}</div>`, 'bankw');
+  if(sel != null) setTimeout(() => $('#w' + sel)?.scrollIntoView({block:'center', behavior:'smooth'}), 120);
+}
+
+// Overlay, Toast, Konfetti
+function sheet(html, cls){ const sh = $('#sheet'); sh.className = 'sheet' + (cls ? ' ' + cls : ''); sh.dataset.k = ''; sh.innerHTML = html; sh.scrollTop = 0; $('#ovl').classList.add('open'); }
+function closeSheet(){ $('#ovl').classList.remove('open'); }
+function toast(t, ms=2600){ const e = $('#toast'); e.textContent = t; e.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(() => e.classList.remove('show'), ms); }
+function confetti(amount=1){
+  const c = $('#confetti'), x = c.getContext('2d'); c.width = innerWidth; c.height = innerHeight; c.style.display = 'block';
+  const cols = ['#FFC93C', '#E5484D', '#22B26B', '#2F6FEB', '#8E4EC6', getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#fff'];
+  const ps = Array.from({length:Math.round(90 * amount)}, () => ({x:innerWidth / 2 + (Math.random() - .5) * 200, y:innerHeight * .55, vx:(Math.random() - .5) * 16, vy:-Math.random() * 16 - 6, r:Math.random() * 6 + 4, c:cols[Math.floor(Math.random() * cols.length)], a:Math.random() * 6, s:(Math.random() - .5) * .3}));
+  const t0 = performance.now();
+  (function f(t){ x.clearRect(0, 0, c.width, c.height); ps.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += .45; p.vx *= .99; p.a += p.s; x.save(); x.translate(p.x, p.y); x.rotate(p.a); x.fillStyle = p.c; x.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * .6); x.restore(); });
+    if(t - t0 < 2200) requestAnimationFrame(f); else { x.clearRect(0, 0, c.width, c.height); c.style.display = 'none'; } })(t0);
+}
+
+// Klicks (data-a)
+function act(a){
+  const n = S.st;
+  switch(a){
+    case 'close': closeSheet(); break;
+    case 'startst': S.seen[n] = 1; goStation(n, firstOpen(n)); break;
+    case 'prevst': goStation(n - 1, 0); break;
+    case 'prevt': S.tk--; save(); reset(); render(); break;
+    case 'nextt': nextTask(); break;
+    case 'check': doCheck(); break;
+    case 'tip': { const b = task(n, S.tk); feedback('tipbox', `${ic('bulb')} <span>${esc(b.tipp)}</span>`); break; }
+    case 'reveal': { const st = R(n, S.tk); CUR.reveal($('#tb')); st.done = true; st.lock = true; st.how = 'help'; save(); const b = task(n, S.tk);
+      feedback('tipbox', `${ic('bulb')} <span>${esc(b.erklaerung || T.solved)}</span>`); updFoot(); break; }
+    case 'fitgo': closeSheet(); enterStation(n + 1); break;
+    case 'extra': S.extra = true; S.end = Date.now() + EXTRA() * 1000; save(); closeSheet(); break;
+    case 'end': case 'report': S.screen = 'report'; save(); reset(); render(); break;
+    case 'resume': S.screen = S.prev || 'station'; save(); render(); break;
+    case 'restart': sheet(`<div class="badge-ic">${ic('refresh')}</div><h2>${T.sure}</h2><p>${T.sureTxt}</p><div class="sh-btns"><button class="btn light" data-a="close">${T.cancel}</button><button class="btn dark" data-a="wipe">${T.yesDel}</button></div>`); break;
+    case 'wipe': S = fresh(); save(); reset(); render(); break;
+  }
+}
+document.addEventListener('click', e => { const t = e.target.closest('[data-a]'); if(t){ e.preventDefault(); act(t.dataset.a); } });
+$('#ovl').addEventListener('click', e => { if(e.target.id === 'ovl' && $('#sheet').dataset.k !== 'tu') closeSheet(); });
+
+// Testmodus
+function devMenu(){
+  if(!DEV) return; let d = $('.dev'); if(!d){ d = document.createElement('div'); d.className = 'dev'; document.body.appendChild(d); }
+  const o = ['<option value="">DEV – springen …</option>', '<option value="intro">Start</option>'];
+  ST().forEach((s, n) => { o.push(`<option value="b${n}">L${n + 1} Erklärung</option>`); s.bausteine.forEach((b, t) => o.push(`<option value="s${n}.${t}">L${n + 1}.${t + 1} ${esc(b.typ)} – ${esc(b.titel || '')}</option>`)); });
+  o.push('<option value="report">Ergebnis</option>');
+  d.innerHTML = `DEV <select>${o.join('')}</select>`;
+  $('select', d).onchange = e => { const v = e.target.value; if(!v) return; if(!S.end && TOTAL()) S.end = Date.now() + TOTAL() * 1000;
+    if(v === 'intro' || v === 'report'){ S.screen = v; save(); reset(); render(); } else if(v[0] === 'b') goBrief(+v.slice(1)); else { const [a, b] = v.slice(1).split('.').map(Number); goStation(a, b); } };
+}
+
+// Passwort (nur bei urheberrechtlich geschützten Texten)
+async function unlock(pw){
+  const b = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey({name:'PBKDF2', salt:b(ENC.s), iterations:ENC.n, hash:'SHA-256'}, km, {name:'AES-GCM', length:256}, false, ['decrypt']);
+  const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:b(ENC.i)}, key, b(ENC.c));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+function lockScreen(){
+  $('#view').innerHTML = `<div class="lock"><div class="badge-ic">${ic('lock')}</div><h2>${esc(META.frage)}</h2><p>${T.pwTxt}</p><input class="tin" id="pw" type="password" placeholder="${T.pw}" autocomplete="off"><small id="pm"></small><button class="btn dark big" id="pgo">${T.open} ${ic('arrow')}</button></div>`;
+  const go = async () => { $('#pgo').disabled = true; try{ APP = await unlock($('#pw').value.trim()); try{ sessionStorage.setItem(KEY + '-k', $('#pw').value.trim()); }catch(e){} boot(); }
+    catch(e){ $('#pgo').disabled = false; $('#pm').textContent = T.pwBad; } };
+  $('#pgo').onclick = go; $('#pw').onkeydown = e => { if(e.key === 'Enter') go(); };
+}
+function duForm(){
+  if(EN || (APP.namen ?? 2) !== 1) return;
+  Object.assign(T, {goal:'Dein Ziel:', minutes:m => `Du hast ${m} Minuten Zeit.`, wrong:'Noch nicht ganz. Versuch es noch einmal.', wrong2:'Noch nicht ganz. Schau dir den Tipp an.',
+    partly:n => `${n} richtig. Schau dir die roten noch einmal an.`, solved:'Hier ist die Lösung. Lies sie genau.', complete:'Bearbeite zuerst alles.',
+    more:m => `Brauchst du noch ${m} Minuten?`, no:'Nein, ich bin fertig', timeup2:'Die Zeit ist um! Jetzt siehst du dein Ergebnis.', results:'Dein Ergebnis',
+    show:'Zeig diese Seite deiner Lehrkraft.', sure:'Bist du sicher?', fit:'Super, du bist fit!', fitTxt:n => `Du kannst jetzt zu Level ${n} weitergehen.`,
+    write:'Schreib hier …', checklist:'Prüfe deinen Text:', answer:'Deine Antwort …', tapGap:'Tippe auf eine Lücke und dann auf ein Wort.',
+    tapPair:'Tippe links auf einen Begriff und dann rechts auf das Passende.', tapCat:'Tippe auf eine Karte und dann auf die passende Gruppe.',
+    tapOrder:'Tippe die Teile in der richtigen Reihenfolge an.', tapMark:'Tippe die Wörter an.', tapFlip:'Tippe die Karten an, um sie umzudrehen.',
+    pwTxt:'Gib das Klassenpasswort ein.', pwBad:'Das Passwort stimmt nicht. Versuch es noch einmal.', ready:'Fertig? Danach kannst du nicht mehr zurück.'});
+}
+function boot(){
+  duForm();
+  S = load() || fresh();
+  if(S.screen !== 'intro' && S.screen !== 'report' && S.screen !== 'resume'){ S.prev = S.screen; S.screen = 'resume'; }
+  if(S.screen === 'resume' && !S.prev) S.prev = 'station';
+  render(); setInterval(tick, 1000);
+}
+(async function init(){
+  if('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+  if(!APP && ENC){
+    const k = (location.hash.match(/k=([^&]+)/) || [])[1] || (() => { try{ return sessionStorage.getItem(KEY + '-k'); }catch(e){ return null; } })();
+    if(k){ try{ APP = await unlock(decodeURIComponent(k)); }catch(e){} }
+    if(!APP){ lockScreen(); return; }
+  }
+  boot();
+})();
+</script>
+</body>
+</html>
