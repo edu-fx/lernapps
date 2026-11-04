@@ -1,6 +1,6 @@
 // Offline-Speicher der Lern-App (von lernapp.py erzeugt). Seite: zuerst Netz (Updates kommen an), sonst Speicher.
 // Bilder, Audio, Schriften: zuerst Speicher. VERSION ändert sich bei jedem Bauen automatisch.
-const VERSION = 'englisch8-05-what-happened-to-tom-ed078dc1';
+const VERSION = 'englisch8-05-what-happened-to-tom-15c0be02';
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./assets/icon-180.png", "./assets/icon-512.png"];
 
 self.addEventListener('install', e => {

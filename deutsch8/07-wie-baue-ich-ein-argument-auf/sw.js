@@ -1,6 +1,6 @@
 // Offline-Speicher der Lern-App (von lernapp.py erzeugt). Seite: zuerst Netz (Updates kommen an), sonst Speicher.
 // Bilder, Audio, Schriften: zuerst Speicher. VERSION ändert sich bei jedem Bauen automatisch.
-const VERSION = 'deutsch8-07-wie-baue-ich-ein-argument-auf-f96dc089';
+const VERSION = 'deutsch8-07-wie-baue-ich-ein-argument-auf-5225301b';
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./assets/icon-180.png", "./assets/icon-512.png"];
 
 self.addEventListener('install', e => {

@@ -96,6 +96,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 .rules{margin-top:12px;font-size:15px;color:var(--ink2);font-weight:600;text-align:center}
 .go-card{background:var(--card);border-radius:26px;padding:22px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:12px}
 .go-card h3{margin:0 0 2px;font-size:20px;line-height:1.3}
+.names{display:grid;gap:12px}.names.ga{grid-template-columns:1fr 1fr}.names.ga .grp{grid-column:1/-1}
+.names.ga .tin{height:46px;font-size:16px}
 .namerow label{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin:0 0 4px 16px}
 .tin{width:100%;height:52px;border-radius:999px;border:1.5px solid var(--line);padding:0 20px;font-size:18px;outline:none;background:var(--soft)}
 .tin:focus{border-color:var(--ink);background:#fff}
@@ -390,7 +392,7 @@ audio{width:100%;margin:6px 0 10px}
    Testmodus: index.html?dev  (kurze Zeit + Sprungmenü)
    ════════════════════════════════════════════════════════════════ */
 const META = {"fach": "musik", "lang": "de", "id": "musik6-03-wie-lange-klingt-eine-note", "frage": "Wie lange klingt eine Note?", "kicker": "Rhythmus", "kurz": "Notenwerte"};
-let APP = {"frage": "Wie lange klingt eine Note?", "kurz": "Notenwerte", "kicker": "Rhythmus", "untertitel": "Ganze, halbe, Viertel und Achtel.", "auftrag": "Arbeite allein mit dem iPad. Nimm Kopfhörer.", "ziel": "Am Ende kennst du die Notenwerte und erkennst einen Rhythmus.", "namen": 1, "zeit": {"gesamt": 12, "extra": 2}, "stationen": [{"titel": "Notenwerte", "kurz": "Kennen", "sterne": 1, "symbol": "musik", "auftrag": "Lerne die Notenwerte kennen.", "erklaerung": ["Dreh die Karten um.", "Ordne dann jeder Note ihren Namen zu."], "bausteine": [{"typ": "karteikarten", "titel": "Vier Notenwerte", "aufgabe": "Tippe die Karten an. Auf der Rückseite steht, wie lange die Note klingt.", "karten": [{"vorne": "img:assets/ganze.svg", "hinten": "Ganze Note – 4 Schläge"}, {"vorne": "img:assets/halbe.svg", "hinten": "Halbe Note – 2 Schläge"}, {"vorne": "img:assets/viertel.svg", "hinten": "Viertelnote – 1 Schlag"}, {"vorne": "img:assets/achtel.svg", "hinten": "Achtelnote – ½ Schlag"}]}, {"typ": "zuordnen", "titel": "Wie heißt die Note?", "titel_links": "Note", "titel_rechts": "Name", "paare": [["img:assets/ganze.svg", "Ganze Note"], ["img:assets/halbe.svg", "Halbe Note"], ["img:assets/viertel.svg", "Viertelnote"], ["img:assets/achtel.svg", "Achtelnote"]], "tipp": "Die Ganze hat keinen Hals. Die Achtel hat ein Fähnchen."}]}, {"titel": "Rechnen mit Noten", "kurz": "Rechnen", "sterne": 2, "symbol": "quiz", "auftrag": "Wie viele Schläge sind das?", "erklaerung": ["Zähl die Schläge zusammen.", "Ein 4/4-Takt hat immer 4 Schläge."], "bausteine": [{"typ": "kurzantwort", "titel": "Zwei Halbe", "aufgabe": "Wie viele Schläge sind zwei halbe Noten?", "antworten": ["4", "vier"], "tipp": "Eine halbe Note = 2 Schläge."}, {"typ": "mc", "titel": "Voller Takt?", "aufgabe": "Welche Kombination füllt einen 4/4-Takt genau?", "optionen": ["Halbe + Viertel", "Halbe + Viertel + zwei Achtel", "Ganze + Viertel"], "richtig": 1, "tipp": "Zusammen müssen es genau 4 Schläge sein."}, {"typ": "luecken", "titel": "Ergänze", "aufgabe": "Schreib die Zahl in die Lücke.", "text": "Eine ganze Note dauert so lang wie [2|zwei] halbe Noten oder [4|vier] Viertelnoten oder [8|acht] Achtelnoten."}]}, {"titel": "Hören", "kurz": "Hören", "sterne": 3, "symbol": "hoeren", "auftrag": "Hör genau hin.", "erklaerung": ["Hör dir den Rhythmus an (erst kommen 4 Klicks zum Einzählen).", "Welchen Rhythmus hörst du?"], "bausteine": [{"typ": "audio", "titel": "Hörbeispiel", "aufgabe": "Hör den Rhythmus zwei- oder dreimal an. Klatsch leise mit.", "datei": "assets/rhythmus.wav"}, {"typ": "mc", "titel": "Welchen Rhythmus hörst du?", "aufgabe": "Ein Takt wird zweimal gespielt.", "optionen": ["Viertel – Viertel – Viertel – Viertel", "Viertel – Viertel – Achtel – Achtel – Viertel", "Halbe – Halbe"], "richtig": 1, "tipp": "In der Mitte klingt es zweimal schnell hintereinander."}]}]};
+let APP = {"frage": "Wie lange klingt eine Note?", "kurz": "Notenwerte", "kicker": "Rhythmus", "untertitel": "Ganze, halbe, Viertel und Achtel.", "auftrag": "Arbeite allein mit dem iPad. Nimm Kopfhörer.", "ziel": "Am Ende kennst du die Notenwerte und erkennst einen Rhythmus.", "zeit": {"gesamt": 12, "extra": 2}, "stationen": [{"titel": "Notenwerte", "kurz": "Kennen", "sterne": 1, "symbol": "musik", "auftrag": "Lerne die Notenwerte kennen.", "erklaerung": ["Dreh die Karten um.", "Ordne dann jeder Note ihren Namen zu."], "bausteine": [{"typ": "karteikarten", "titel": "Vier Notenwerte", "aufgabe": "Tippe die Karten an. Auf der Rückseite steht, wie lange die Note klingt.", "karten": [{"vorne": "img:assets/ganze.svg", "hinten": "Ganze Note – 4 Schläge"}, {"vorne": "img:assets/halbe.svg", "hinten": "Halbe Note – 2 Schläge"}, {"vorne": "img:assets/viertel.svg", "hinten": "Viertelnote – 1 Schlag"}, {"vorne": "img:assets/achtel.svg", "hinten": "Achtelnote – ½ Schlag"}]}, {"typ": "zuordnen", "titel": "Wie heißt die Note?", "titel_links": "Note", "titel_rechts": "Name", "paare": [["img:assets/ganze.svg", "Ganze Note"], ["img:assets/halbe.svg", "Halbe Note"], ["img:assets/viertel.svg", "Viertelnote"], ["img:assets/achtel.svg", "Achtelnote"]], "tipp": "Die Ganze hat keinen Hals. Die Achtel hat ein Fähnchen."}], "anforderung": "reproduktion"}, {"titel": "Rechnen mit Noten", "kurz": "Rechnen", "sterne": 2, "symbol": "quiz", "auftrag": "Wie viele Schläge sind das?", "erklaerung": ["Zähl die Schläge zusammen.", "Ein 4/4-Takt hat immer 4 Schläge."], "bausteine": [{"typ": "kurzantwort", "titel": "Zwei Halbe", "aufgabe": "Wie viele Schläge sind zwei halbe Noten?", "antworten": ["4", "vier"], "tipp": "Eine halbe Note = 2 Schläge."}, {"typ": "mc", "titel": "Voller Takt?", "aufgabe": "Welche Kombination füllt einen 4/4-Takt genau?", "optionen": ["Halbe + Viertel", "Halbe + Viertel + zwei Achtel", "Ganze + Viertel"], "richtig": 1, "tipp": "Zusammen müssen es genau 4 Schläge sein."}, {"typ": "luecken", "titel": "Ergänze", "aufgabe": "Schreib die Zahl in die Lücke.", "text": "Eine ganze Note dauert so lang wie [2|zwei] halbe Noten oder [4|vier] Viertelnoten oder [8|acht] Achtelnoten."}], "anforderung": "reorganisation"}, {"titel": "Hören", "kurz": "Hören", "sterne": 3, "symbol": "hoeren", "auftrag": "Hör genau hin.", "erklaerung": ["Hör dir den Rhythmus an (erst kommen 4 Klicks zum Einzählen).", "Welchen Rhythmus hörst du?"], "bausteine": [{"typ": "audio", "titel": "Hörbeispiel", "aufgabe": "Hör den Rhythmus zwei- oder dreimal an. Klatsch leise mit.", "datei": "assets/rhythmus.wav"}, {"typ": "mc", "titel": "Welchen Rhythmus hörst du?", "aufgabe": "Ein Takt wird zweimal gespielt.", "optionen": ["Viertel – Viertel – Viertel – Viertel", "Viertel – Viertel – Achtel – Achtel – Viertel", "Halbe – Halbe"], "richtig": 1, "tipp": "In der Mitte klingt es zweimal schnell hintereinander."}], "anforderung": "transfer"}], "sozialform": "EA"};
 const ENC = /*__ENC__*/null;
 
 const DEV = /[?&]dev\b/.test(location.search);
@@ -405,7 +407,7 @@ const same = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
 
 // ───────────── Texte (Englisch-Apps komplett auf Englisch) ─────────────
 const T = EN ? {
-  start:'Let’s start', name:'Name', names1:'Your name', partner:'Partner', goal:'Your goal:', minutes:m => `You have ${m} minutes.`,
+  start:'Let’s start', name:'Name', names1:'Your name', partner:'Partner', group:'Group name', member:'Group member', opt:'(optional)', afb:{reproduktion:'Remember', reorganisation:'Apply', transfer:'Transfer'}, goal:'Your goal:', minutes:m => `You have ${m} minutes.`,
   level:'Level', check:'Check', next:'Next', back:'Back', tip:'Tip', solution:'Show solution', finish:'Finish',
   right:['Great!','Well done!','Perfect!','Excellent!','Super!'], wrong:'Not quite. Try again.', wrong2:'Not quite. Look at the tip or try again.',
   partly:n => `${n} correct. Look at the red ones again.`, solved:'Here is the solution. Read it carefully.',
@@ -421,7 +423,7 @@ const T = EN ? {
   pw:'Password', pwTxt:'Enter the class password.', pwBad:'Wrong password. Try again.', open:'Open', ready:'Ready? You can’t go back after this.', readyBtn:'Show results',
   done:'Done', firstTry:'right first time', afterTries:'right after trying again', withHelp:'solved with help', open2:'not done', fit:'Great, you are fit!', fitTxt:n => `You can go on to Level ${n} now.`, fitGo:n => `Go to Level ${n}`, fitStay:'Practise a bit more'
 } : {
-  start:'Los geht’s', name:'Name', names1:'Dein Name', partner:'Partner/in', goal:'Euer Ziel:', minutes:m => `Ihr habt ${m} Minuten Zeit.`,
+  start:'Los geht’s', name:'Name', names1:'Dein Name', partner:'Partner/in', group:'Gruppenname', member:'Gruppenmitglied', opt:'(freiwillig)', afb:{reproduktion:'Wiederholen', reorganisation:'Anwenden', transfer:'Übertragen'}, goal:'Euer Ziel:', minutes:m => `Ihr habt ${m} Minuten Zeit.`,
   level:'Level', check:'Prüfen', next:'Weiter', back:'Zurück', tip:'Tipp', solution:'Lösung zeigen', finish:'Fertig',
   right:['Super!','Richtig!','Klasse!','Stark!','Genau!'], wrong:'Noch nicht ganz. Versucht es noch einmal.', wrong2:'Noch nicht ganz. Schaut euch den Tipp an.',
   partly:n => `${n} richtig. Schaut euch die roten noch einmal an.`, solved:'Hier ist die Lösung. Lest sie genau.',
@@ -494,6 +496,9 @@ const imgSrc = s => s.replace(/^img:/, '');
 const item = s => img(s) ? `<img src="${esc(imgSrc(s))}" alt="">` : esc(s);
 
 // ───────────── Zustand ─────────────
+// Sozialform: EA (1 Name, du-Form) · PA (2 Namen) · GA (Gruppenname + bis zu 4 Namen freiwillig)
+const SF = () => String(APP.sozialform || (APP.namen === 1 ? 'EA' : APP.namen > 2 ? 'GA' : 'PA')).toUpperCase();
+const team = () => SF() === 'GA' ? (S.team || '') : (S.names || []).filter(Boolean).join(' & ');
 const KEY = 'lernapp-' + META.id;
 let S = null;
 function fresh(){ return {v:1, screen:'intro', names:[], st:0, tk:0, seen:{}, res:{}, left:null, extra:false, end:null, enter:null, fit:{}}; }
@@ -676,7 +681,7 @@ B.reihenfolge = (b, st) => {
   st.v ||= [];
   return {
     auto: true,
-    html: () => `<div class="olabel">${EN ? 'Your order' : (APP.namen ?? 2) === 1 ? 'Deine Reihenfolge' : 'Eure Reihenfolge'}</div><div class="order ${list ? 'list' : ''}"></div><div class="pool ${list ? 'list' : ''}"></div>`,
+    html: () => `<div class="olabel">${EN ? 'Your order' : SF() === 'EA' ? 'Deine Reihenfolge' : 'Eure Reihenfolge'}</div><div class="order ${list ? 'list' : ''}"></div><div class="pool ${list ? 'list' : ''}"></div>`,
     mount(el){ paint(el); },
     filled: () => st.v.length === E.length,
     check(el){ const ok = st.v.every((x, i) => E[x] === E[i]); // gleiche Texte gelten als gleich
@@ -812,7 +817,7 @@ function renderTop(){
   const t = $('#top');
   if(S.screen === 'intro' || S.screen === 'resume'){ t.className = 'top hide'; return; }
   t.className = 'top';
-  const nm = (S.names || []).filter(Boolean).join(' & ') || META.kurz || '';
+  const nm = team() || META.kurz || '';
   const steps = ST().map((s, i) => { const done = s.bausteine.every((_, k) => R(i, k).done); const cur = S.screen !== 'report' && S.st === i;
     return `<div class="step ${cur ? 'cur' : ''} ${done && !cur ? 'done' : ''}"><span class="mk">${done && !cur ? ic('check') : stars(s.sterne || i + 1)}</span><span>${esc(s.kurz || s.titel)}</span></div>`; }).join('') +
     `<div class="step ${S.screen === 'report' ? 'cur' : ''}"><span class="mk">${ic('trophy')}</span><span>${esc(T.results)}</span></div>`;
@@ -857,29 +862,31 @@ function tiles(){
   return ST().map((s, i) => `<div class="lvmini ${s.bonus ? 'bonus' : ''}" style="--c:${TILE[i % TILE.length]};--bonus:'${T.bonus}'"><div class="ico">${ic(s.symbol || TYPSYM[(s.bausteine.find(b => b.typ !== 'info') || s.bausteine[0]).typ] || 'star', 'x')}</div><span><span class="stars">${stars(s.sterne || i + 1)}</span>${esc(s.kurz || s.titel)}</span></div>`).join('');
 }
 function rIntro(){
-  const n = APP.namen ?? 2;
-  const labels = APP.namen_labels || (n === 1 ? [T.names1] : Array.from({length:n}, (_, i) => `${T.partner} ${i + 1}`));
+  const sf = SF();
+  const fields = sf === 'EA' ? [{l:T.names1, req:1}] : sf === 'GA' ? [{l:T.group, req:1, g:1}, ...[1, 2, 3, 4].map(i => ({l:`${T.member} ${i} ${T.opt}`}))]
+    : [{l:`${T.partner} 1`, req:1}, {l:`${T.partner} 2`, req:1}];
+  (APP.namen_labels || []).forEach((l, i) => fields[i] && (fields[i].l = l));
   $('#view').innerHTML = `
     <section class="hero" ${APP.bild ? `style="background-image:url('${esc(APP.bild)}')"` : ''}>${APP.bild ? '' : `<div class="art" style="--artbg:${heroBg()}">${heroArt()}</div>`}
       <div class="hero-in"><div class="eyebrow"><b></b>${esc(APP.kicker || META.kicker || '')}</div><h1>${esc(META.frage)}</h1>${APP.untertitel ? `<p>${esc(APP.untertitel)}</p>` : ''}</div></section>
     <div class="startrow">
       <div><div class="lvlist">${tiles()}</div>${TOTAL() ? `<div class="rules">${T.minutes(Math.round(TOTAL() / 60))}</div>` : ''}</div>
       <div class="go-card"><h3>${esc(APP.auftrag || '')}</h3>${APP.ziel ? `<div class="goal">${ic('flag')}<span><b>${T.goal}</b> ${esc(APP.ziel)}</span></div>` : ''}
-        ${labels.map((l, i) => `<div class="namerow"><label>${esc(l)}</label><input class="tin" data-n="${i}" placeholder="${T.name}" maxlength="20" autocomplete="off"></div>`).join('')}
-        <button class="btn dark big" id="go" ${n ? 'disabled' : ''}>${T.start} ${ic('arrow')}</button></div>
+        <div class="names ${sf === 'GA' ? 'ga' : ''}">${fields.map((f, i) => `<div class="namerow ${f.g ? 'grp' : ''}"><label>${esc(f.l)}</label><input class="tin" data-n="${i}" ${f.req ? 'data-req="1"' : ''} ${f.g ? 'data-g="1"' : ''} placeholder="${f.g ? T.group : T.name}" maxlength="24" autocomplete="off"></div>`).join('')}</div>
+        <button class="btn dark big" id="go" disabled>${T.start} ${ic('arrow')}</button></div>
     </div>`;
-  const ins = $$('.tin'); const upd = () => $('#go').disabled = ins.some(x => !x.value.trim());
+  const ins = $$('.tin'); const upd = () => $('#go').disabled = ins.some(x => x.dataset.req && !x.value.trim());
   ins.forEach(x => { x.oninput = upd; x.onkeydown = e => { if(e.key === 'Enter') x.blur(); }; });
-  $('#go').onclick = () => { S.names = ins.map(x => x.value.trim()); if(TOTAL()) S.end = Date.now() + TOTAL() * 1000; save(); enterStation(0); };
+  $('#go').onclick = () => { const g = ins.find(x => x.dataset.g); S.team = g ? g.value.trim() : ''; S.names = ins.filter(x => !x.dataset.g).map(x => x.value.trim()).filter(Boolean); if(TOTAL()) S.end = Date.now() + TOTAL() * 1000; save(); enterStation(0); };
 }
 function rResume(){
-  $('#view').innerHTML = `<div class="ask"><div class="badge-ic">${ic('star')}</div><h2>${T.welcome}</h2><p>${esc((S.names || []).filter(Boolean).join(' & '))}</p>
+  $('#view').innerHTML = `<div class="ask"><div class="badge-ic">${ic('star')}</div><h2>${T.welcome}</h2><p>${esc(team())}</p>
     <div class="row"><button class="btn light" data-a="restart">${ic('refresh')} ${T.again}</button><button class="btn dark" data-a="resume">${T.cont} ${ic('arrow')}</button></div></div>`;
 }
 function rBrief(){
   const n = S.st, s = ST()[n];
   $('#view').innerHTML = `<div class="brief"><div class="pic" style="--c:${TILE[n % TILE.length]}"><span class="lbadge">${stars(s.sterne || n + 1)}</span><div class="ico">${ic(s.symbol || TYPSYM[(s.bausteine.find(b => b.typ !== 'info') || s.bausteine[0]).typ] || 'star', 'x')}</div></div>
-    <div class="txt"><div class="kick">${T.level} ${n + 1}</div><h2>${esc(s.titel)}</h2>
+    <div class="txt"><div class="kick">${T.level} ${n + 1}${s.anforderung && T.afb[s.anforderung] ? ' · ' + T.afb[s.anforderung] : ''}</div><h2>${esc(s.titel)}</h2>
       <ol>${s.erklaerung.map((e, i) => `<li><b class="n">${i + 1}</b><span>${esc(e)}</span></li>`).join('')}</ol>
       ${s.ziel ? `<div class="goal">${ic('flag')}<span>${esc(s.ziel)}</span></div>` : ''}
       <button class="btn dark big go" data-a="startst">${T.startLvl(n + 1)} ${ic('arrow')}</button></div></div>`;
@@ -959,7 +966,7 @@ function rReport(){
     return rows ? `<div class="rcard"><h4>${stars(s.sterne || n + 1)} ${T.level} ${n + 1} · ${esc(s.titel)}</h4>${rows}</div>` : '';
   }).join('');
   const A = APP.abschluss || {};
-  $('#view').innerHTML = `<div class="ask"><div class="badge-ic">${ic('trophy')}</div><h2>${esc(A.titel || (EN ? 'Well done' : 'Geschafft') + ((S.names || []).filter(Boolean).length ? ', ' + S.names.filter(Boolean).join(' & ') : '') + '!')}</h2>
+  $('#view').innerHTML = `<div class="ask"><div class="badge-ic">${ic('trophy')}</div><h2>${esc(A.titel || (EN ? 'Well done' : 'Geschafft') + (team() ? ', ' + team() : '') + '!')}</h2>
     ${all ? `<div class="score">${ic('check')} ${T.resultsOf(ok, all)}</div>` : ''}<p style="margin-top:14px">${esc(A.text || T.show)}</p></div>
     <div class="rep">${cards}</div><div style="text-align:center;margin-top:18px"><button class="linkbtn" data-a="restart">${T.again}</button></div>`;
   if(!S.party){ S.party = 1; save(); confetti(2); }
@@ -1037,7 +1044,7 @@ function lockScreen(){
   $('#pgo').onclick = go; $('#pw').onkeydown = e => { if(e.key === 'Enter') go(); };
 }
 function duForm(){
-  if(EN || (APP.namen ?? 2) !== 1) return;
+  if(EN || SF() !== 'EA') return;
   Object.assign(T, {goal:'Dein Ziel:', minutes:m => `Du hast ${m} Minuten Zeit.`, wrong:'Noch nicht ganz. Versuch es noch einmal.', wrong2:'Noch nicht ganz. Schau dir den Tipp an.',
     partly:n => `${n} richtig. Schau dir die roten noch einmal an.`, solved:'Hier ist die Lösung. Lies sie genau.', complete:'Bearbeite zuerst alles.',
     more:m => `Brauchst du noch ${m} Minuten?`, no:'Nein, ich bin fertig', timeup2:'Die Zeit ist um! Jetzt siehst du dein Ergebnis.', results:'Dein Ergebnis',

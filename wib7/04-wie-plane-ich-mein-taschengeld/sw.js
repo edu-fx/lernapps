@@ -1,6 +1,6 @@
 // Offline-Speicher der Lern-App (von lernapp.py erzeugt). Seite: zuerst Netz (Updates kommen an), sonst Speicher.
 // Bilder, Audio, Schriften: zuerst Speicher. VERSION ändert sich bei jedem Bauen automatisch.
-const VERSION = 'wib7-04-wie-plane-ich-mein-taschengeld-40336d16';
+const VERSION = 'wib7-04-wie-plane-ich-mein-taschengeld-becb1a6b';
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./assets/icon-180.png", "./assets/icon-512.png"];
 
 self.addEventListener('install', e => {

@@ -1,6 +1,6 @@
 // Offline-Speicher der Lern-App (von lernapp.py erzeugt). Seite: zuerst Netz (Updates kommen an), sonst Speicher.
 // Bilder, Audio, Schriften: zuerst Speicher. VERSION ändert sich bei jedem Bauen automatisch.
-const VERSION = 'musik6-03-wie-lange-klingt-eine-note-2f77872d';
+const VERSION = 'musik6-03-wie-lange-klingt-eine-note-6ac00bab';
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./assets/achtel.svg", "./assets/ganze.svg", "./assets/halbe.svg", "./assets/icon-180.png", "./assets/icon-512.png", "./assets/rhythmus.wav", "./assets/viertel.svg"];
 
 self.addEventListener('install', e => {

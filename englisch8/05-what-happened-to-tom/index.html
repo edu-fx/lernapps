@@ -96,6 +96,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 .rules{margin-top:12px;font-size:15px;color:var(--ink2);font-weight:600;text-align:center}
 .go-card{background:var(--card);border-radius:26px;padding:22px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:12px}
 .go-card h3{margin:0 0 2px;font-size:20px;line-height:1.3}
+.names{display:grid;gap:12px}.names.ga{grid-template-columns:1fr 1fr}.names.ga .grp{grid-column:1/-1}
+.names.ga .tin{height:46px;font-size:16px}
 .namerow label{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin:0 0 4px 16px}
 .tin{width:100%;height:52px;border-radius:999px;border:1.5px solid var(--line);padding:0 20px;font-size:18px;outline:none;background:var(--soft)}
 .tin:focus{border-color:var(--ink);background:#fff}
@@ -390,7 +392,7 @@ audio{width:100%;margin:6px 0 10px}
    Testmodus: index.html?dev  (kurze Zeit + Sprungmenü)
    ════════════════════════════════════════════════════════════════ */
 const META = {"fach": "englisch", "lang": "en", "id": "englisch8-05-what-happened-to-tom", "frage": "What happened to Tom?", "kicker": "Tom’s bad day", "kurz": "Tom"};
-let APP = {"frage": "What happened to Tom?", "kurz": "Tom", "kicker": "Tom’s bad day", "untertitel": "Read Tom’s story and practise the simple past.", "auftrag": "Work with your partner.", "ziel": "At the end, you can tell what happened to Tom.", "namen": 2, "zeit": {"gesamt": 15, "extra": 3}, "wortbank": [{"wort": "to miss the bus", "form": "missed the bus", "bedeutung": "den Bus verpassen", "beispiel": "Tom missed the bus."}, {"wort": "to drop", "form": "dropped", "bedeutung": "fallen lassen", "beispiel": "He dropped his phone."}, {"wort": "luckily", "bedeutung": "zum Glück", "beispiel": "Luckily, his friend Amy helped him."}], "stationen": [{"titel": "Read the story", "kurz": "Read", "sterne": 1, "symbol": "lesen", "auftrag": "Read the text. Then answer the questions.", "erklaerung": ["Read Tom’s story on the left.", "Answer the questions on the right.", "Tap the dotted words if you need help."], "material": {"typ": "lesetext", "titel_text": "Tom’s bad day", "zeilennummern": true, "text": "Last Monday, Tom woke up late.\nHe jumped out of bed and ran to the bus stop.\nBut he missed the bus.\n\nSo he walked to school in the rain.\nOn the way, he dropped his phone in a puddle.\nThe phone did not work any more.\n\nAt school, his teacher was angry.\nLuckily, his friend Amy helped him.\nShe gave him her umbrella for the way home."}, "bausteine": [{"typ": "wahr_falsch", "titel": "True or false?", "aufgabe": "Read the sentences. Are they true or false?", "aussagen": [{"text": "Tom woke up early.", "wahr": false}, {"text": "Tom missed the bus.", "wahr": true}, {"text": "He went to school by car.", "wahr": false}, {"text": "Amy gave Tom her umbrella.", "wahr": true}], "tipp": "Look at lines 1–4 and 8–9."}, {"typ": "mc", "titel": "What happened to the phone?", "aufgabe": "Choose the right answer.", "optionen": ["Tom lost it on the bus.", "Tom dropped it in a puddle.", "Amy took it."], "richtig": 1, "tipp": "Look at line 5."}]}, {"titel": "Simple past", "kurz": "Past", "sterne": 2, "symbol": "luecke", "auftrag": "Practise the simple past.", "erklaerung": ["Fill in the verbs in the simple past.", "Then put the words in the right order."], "bausteine": [{"typ": "info", "titel": "Remember", "merke": true, "text": "**Simple past** – things that happened in the past.\n\n- regular verbs: walk → walk**ed**, drop → drop**ped**\n- irregular verbs: run → **ran**, give → **gave**, wake → **woke**"}, {"typ": "luecken", "titel": "Fill the gaps", "aufgabe": "Tap a gap. Then tap the right verb.", "modus": "auswahl", "text": "Tom [woke] up late. He [ran] to the bus stop. He [walked] to school. Amy [gave] him her umbrella.", "ablenker": ["wake", "runned"], "tipp": "Two words are not in the simple past."}, {"typ": "luecken", "titel": "Write the verbs", "aufgabe": "Write the simple past.", "text": "jump → [jumped]\nmiss → [missed]\ndrop → [dropped]\nbe (he) → [was]", "tipp": "drop: double the p."}, {"typ": "reihenfolge", "titel": "Make a sentence", "aufgabe": "Put the words in the right order.", "modus": "satz", "elemente": ["Tom", "missed", "the", "bus", "last", "Monday."]}]}, {"titel": "Tell the story", "kurz": "Tell", "sterne": 3, "symbol": "schreiben", "auftrag": "Tell the story in your own words.", "erklaerung": ["Put the events in the right order.", "Then write three sentences about Tom’s day.", "Read your sentences to your partner."], "bausteine": [{"typ": "reihenfolge", "titel": "What happened first?", "modus": "liste", "elemente": ["Tom woke up late.", "He missed the bus.", "He dropped his phone.", "His teacher was angry.", "Amy helped him."]}, {"typ": "schreiben", "titel": "Your story", "aufgabe": "Write at least three sentences about Tom’s day.", "satzanfaenge": ["Last Monday, …", "First, …", "Then …", "Luckily, …"], "mindestwoerter": 20, "checkliste": ["I used the simple past.", "I wrote at least three sentences."], "platzhalter": "Write in English …"}]}], "abschluss": {"text": "Read your story to your partner. Then show this page to your teacher."}};
+let APP = {"frage": "What happened to Tom?", "kurz": "Tom", "kicker": "Tom’s bad day", "untertitel": "Read Tom’s story and practise the simple past.", "auftrag": "Work with your partner.", "ziel": "At the end, you can tell what happened to Tom.", "zeit": {"gesamt": 15, "extra": 3}, "wortbank": [{"wort": "to miss the bus", "form": "missed the bus", "bedeutung": "den Bus verpassen", "beispiel": "Tom missed the bus."}, {"wort": "to drop", "form": "dropped", "bedeutung": "fallen lassen", "beispiel": "He dropped his phone."}, {"wort": "luckily", "bedeutung": "zum Glück", "beispiel": "Luckily, his friend Amy helped him."}], "stationen": [{"titel": "Read the story", "kurz": "Read", "sterne": 1, "symbol": "lesen", "auftrag": "Read the text. Then answer the questions.", "erklaerung": ["Read Tom’s story on the left.", "Answer the questions on the right.", "Tap the dotted words if you need help."], "material": {"typ": "lesetext", "titel_text": "Tom’s bad day", "zeilennummern": true, "text": "Last Monday, Tom woke up late.\nHe jumped out of bed and ran to the bus stop.\nBut he missed the bus.\n\nSo he walked to school in the rain.\nOn the way, he dropped his phone in a puddle.\nThe phone did not work any more.\n\nAt school, his teacher was angry.\nLuckily, his friend Amy helped him.\nShe gave him her umbrella for the way home."}, "bausteine": [{"typ": "wahr_falsch", "titel": "True or false?", "aufgabe": "Read the sentences. Are they true or false?", "aussagen": [{"text": "Tom woke up early.", "wahr": false}, {"text": "Tom missed the bus.", "wahr": true}, {"text": "He went to school by car.", "wahr": false}, {"text": "Amy gave Tom her umbrella.", "wahr": true}], "tipp": "Look at lines 1–4 and 8–9."}, {"typ": "mc", "titel": "What happened to the phone?", "aufgabe": "Choose the right answer.", "optionen": ["Tom lost it on the bus.", "Tom dropped it in a puddle.", "Amy took it."], "richtig": 1, "tipp": "Look at line 5."}], "anforderung": "reproduktion"}, {"titel": "Simple past", "kurz": "Past", "sterne": 2, "symbol": "luecke", "auftrag": "Practise the simple past.", "erklaerung": ["Fill in the verbs in the simple past.", "Then put the words in the right order."], "bausteine": [{"typ": "info", "titel": "Remember", "merke": true, "text": "**Simple past** – things that happened in the past.\n\n- regular verbs: walk → walk**ed**, drop → drop**ped**\n- irregular verbs: run → **ran**, give → **gave**, wake → **woke**"}, {"typ": "luecken", "titel": "Fill the gaps", "aufgabe": "Tap a gap. Then tap the right verb.", "modus": "auswahl", "text": "Tom [woke] up late. He [ran] to the bus stop. He [walked] to school. Amy [gave] him her umbrella.", "ablenker": ["wake", "runned"], "tipp": "Two words are not in the simple past."}, {"typ": "luecken", "titel": "Write the verbs", "aufgabe": "Write the simple past.", "text": "jump → [jumped]\nmiss → [missed]\ndrop → [dropped]\nbe (he) → [was]", "tipp": "drop: double the p."}, {"typ": "reihenfolge", "titel": "Make a sentence", "aufgabe": "Put the words in the right order.", "modus": "satz", "elemente": ["Tom", "missed", "the", "bus", "last", "Monday."]}], "anforderung": "reorganisation"}, {"titel": "Tell the story", "kurz": "Tell", "sterne": 3, "symbol": "schreiben", "auftrag": "Tell the story in your own words.", "erklaerung": ["Put the events in the right order.", "Then write three sentences about Tom’s day.", "Read your sentences to your partner."], "bausteine": [{"typ": "reihenfolge", "titel": "What happened first?", "modus": "liste", "elemente": ["Tom woke up late.", "He missed the bus.", "He dropped his phone.", "His teacher was angry.", "Amy helped him."]}, {"typ": "schreiben", "titel": "Your story", "aufgabe": "Write at least three sentences about Tom’s day.", "satzanfaenge": ["Last Monday, …", "First, …", "Then …", "Luckily, …"], "mindestwoerter": 20, "checkliste": ["I used the simple past.", "I wrote at least three sentences."], "platzhalter": "Write in English …"}], "anforderung": "transfer"}], "abschluss": {"text": "Read your story to your partner. Then show this page to your teacher."}, "sozialform": "PA"};
 const ENC = /*__ENC__*/null;
 
 const DEV = /[?&]dev\b/.test(location.search);
@@ -405,7 +407,7 @@ const same = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
 
 // ───────────── Texte (Englisch-Apps komplett auf Englisch) ─────────────
 const T = EN ? {
-  start:'Let’s start', name:'Name', names1:'Your name', partner:'Partner', goal:'Your goal:', minutes:m => `You have ${m} minutes.`,
+  start:'Let’s start', name:'Name', names1:'Your name', partner:'Partner', group:'Group name', member:'Group member', opt:'(optional)', afb:{reproduktion:'Remember', reorganisation:'Apply', transfer:'Transfer'}, goal:'Your goal:', minutes:m => `You have ${m} minutes.`,
   level:'Level', check:'Check', next:'Next', back:'Back', tip:'Tip', solution:'Show solution', finish:'Finish',
   right:['Great!','Well done!','Perfect!','Excellent!','Super!'], wrong:'Not quite. Try again.', wrong2:'Not quite. Look at the tip or try again.',
   partly:n => `${n} correct. Look at the red ones again.`, solved:'Here is the solution. Read it carefully.',
@@ -421,7 +423,7 @@ const T = EN ? {
   pw:'Password', pwTxt:'Enter the class password.', pwBad:'Wrong password. Try again.', open:'Open', ready:'Ready? You can’t go back after this.', readyBtn:'Show results',
   done:'Done', firstTry:'right first time', afterTries:'right after trying again', withHelp:'solved with help', open2:'not done', fit:'Great, you are fit!', fitTxt:n => `You can go on to Level ${n} now.`, fitGo:n => `Go to Level ${n}`, fitStay:'Practise a bit more'
 } : {
-  start:'Los geht’s', name:'Name', names1:'Dein Name', partner:'Partner/in', goal:'Euer Ziel:', minutes:m => `Ihr habt ${m} Minuten Zeit.`,
+  start:'Los geht’s', name:'Name', names1:'Dein Name', partner:'Partner/in', group:'Gruppenname', member:'Gruppenmitglied', opt:'(freiwillig)', afb:{reproduktion:'Wiederholen', reorganisation:'Anwenden', transfer:'Übertragen'}, goal:'Euer Ziel:', minutes:m => `Ihr habt ${m} Minuten Zeit.`,
   level:'Level', check:'Prüfen', next:'Weiter', back:'Zurück', tip:'Tipp', solution:'Lösung zeigen', finish:'Fertig',
   right:['Super!','Richtig!','Klasse!','Stark!','Genau!'], wrong:'Noch nicht ganz. Versucht es noch einmal.', wrong2:'Noch nicht ganz. Schaut euch den Tipp an.',
   partly:n => `${n} richtig. Schaut euch die roten noch einmal an.`, solved:'Hier ist die Lösung. Lest sie genau.',
@@ -494,6 +496,9 @@ const imgSrc = s => s.replace(/^img:/, '');
 const item = s => img(s) ? `<img src="${esc(imgSrc(s))}" alt="">` : esc(s);
 
 // ───────────── Zustand ─────────────
+// Sozialform: EA (1 Name, du-Form) · PA (2 Namen) · GA (Gruppenname + bis zu 4 Namen freiwillig)
+const SF = () => String(APP.sozialform || (APP.namen === 1 ? 'EA' : APP.namen > 2 ? 'GA' : 'PA')).toUpperCase();
+const team = () => SF() === 'GA' ? (S.team || '') : (S.names || []).filter(Boolean).join(' & ');
 const KEY = 'lernapp-' + META.id;
 let S = null;
 function fresh(){ return {v:1, screen:'intro', names:[], st:0, tk:0, seen:{}, res:{}, left:null, extra:false, end:null, enter:null, fit:{}}; }
@@ -676,7 +681,7 @@ B.reihenfolge = (b, st) => {
   st.v ||= [];
   return {
     auto: true,
-    html: () => `<div class="olabel">${EN ? 'Your order' : (APP.namen ?? 2) === 1 ? 'Deine Reihenfolge' : 'Eure Reihenfolge'}</div><div class="order ${list ? 'list' : ''}"></div><div class="pool ${list ? 'list' : ''}"></div>`,
+    html: () => `<div class="olabel">${EN ? 'Your order' : SF() === 'EA' ? 'Deine Reihenfolge' : 'Eure Reihenfolge'}</div><div class="order ${list ? 'list' : ''}"></div><div class="pool ${list ? 'list' : ''}"></div>`,
     mount(el){ paint(el); },
     filled: () => st.v.length === E.length,
     check(el){ const ok = st.v.every((x, i) => E[x] === E[i]); // gleiche Texte gelten als gleich
@@ -812,7 +817,7 @@ function renderTop(){
   const t = $('#top');
   if(S.screen === 'intro' || S.screen === 'resume'){ t.className = 'top hide'; return; }
   t.className = 'top';
-  const nm = (S.names || []).filter(Boolean).join(' & ') || META.kurz || '';
+  const nm = team() || META.kurz || '';
   const steps = ST().map((s, i) => { const done = s.bausteine.every((_, k) => R(i, k).done); const cur = S.screen !== 'report' && S.st === i;
     return `<div class="step ${cur ? 'cur' : ''} ${done && !cur ? 'done' : ''}"><span class="mk">${done && !cur ? ic('check') : stars(s.sterne || i + 1)}</span><span>${esc(s.kurz || s.titel)}</span></div>`; }).join('') +
     `<div class="step ${S.screen === 'report' ? 'cur' : ''}"><span class="mk">${ic('trophy')}</span><span>${esc(T.results)}</span></div>`;
@@ -857,29 +862,31 @@ function tiles(){
   return ST().map((s, i) => `<div class="lvmini ${s.bonus ? 'bonus' : ''}" style="--c:${TILE[i % TILE.length]};--bonus:'${T.bonus}'"><div class="ico">${ic(s.symbol || TYPSYM[(s.bausteine.find(b => b.typ !== 'info') || s.bausteine[0]).typ] || 'star', 'x')}</div><span><span class="stars">${stars(s.sterne || i + 1)}</span>${esc(s.kurz || s.titel)}</span></div>`).join('');
 }
 function rIntro(){
-  const n = APP.namen ?? 2;
-  const labels = APP.namen_labels || (n === 1 ? [T.names1] : Array.from({length:n}, (_, i) => `${T.partner} ${i + 1}`));
+  const sf = SF();
+  const fields = sf === 'EA' ? [{l:T.names1, req:1}] : sf === 'GA' ? [{l:T.group, req:1, g:1}, ...[1, 2, 3, 4].map(i => ({l:`${T.member} ${i} ${T.opt}`}))]
+    : [{l:`${T.partner} 1`, req:1}, {l:`${T.partner} 2`, req:1}];
+  (APP.namen_labels || []).forEach((l, i) => fields[i] && (fields[i].l = l));
   $('#view').innerHTML = `
     <section class="hero" ${APP.bild ? `style="background-image:url('${esc(APP.bild)}')"` : ''}>${APP.bild ? '' : `<div class="art" style="--artbg:${heroBg()}">${heroArt()}</div>`}
       <div class="hero-in"><div class="eyebrow"><b></b>${esc(APP.kicker || META.kicker || '')}</div><h1>${esc(META.frage)}</h1>${APP.untertitel ? `<p>${esc(APP.untertitel)}</p>` : ''}</div></section>
     <div class="startrow">
       <div><div class="lvlist">${tiles()}</div>${TOTAL() ? `<div class="rules">${T.minutes(Math.round(TOTAL() / 60))}</div>` : ''}</div>
       <div class="go-card"><h3>${esc(APP.auftrag || '')}</h3>${APP.ziel ? `<div class="goal">${ic('flag')}<span><b>${T.goal}</b> ${esc(APP.ziel)}</span></div>` : ''}
-        ${labels.map((l, i) => `<div class="namerow"><label>${esc(l)}</label><input class="tin" data-n="${i}" placeholder="${T.name}" maxlength="20" autocomplete="off"></div>`).join('')}
-        <button class="btn dark big" id="go" ${n ? 'disabled' : ''}>${T.start} ${ic('arrow')}</button></div>
+        <div class="names ${sf === 'GA' ? 'ga' : ''}">${fields.map((f, i) => `<div class="namerow ${f.g ? 'grp' : ''}"><label>${esc(f.l)}</label><input class="tin" data-n="${i}" ${f.req ? 'data-req="1"' : ''} ${f.g ? 'data-g="1"' : ''} placeholder="${f.g ? T.group : T.name}" maxlength="24" autocomplete="off"></div>`).join('')}</div>
+        <button class="btn dark big" id="go" disabled>${T.start} ${ic('arrow')}</button></div>
     </div>`;
-  const ins = $$('.tin'); const upd = () => $('#go').disabled = ins.some(x => !x.value.trim());
+  const ins = $$('.tin'); const upd = () => $('#go').disabled = ins.some(x => x.dataset.req && !x.value.trim());
   ins.forEach(x => { x.oninput = upd; x.onkeydown = e => { if(e.key === 'Enter') x.blur(); }; });
-  $('#go').onclick = () => { S.names = ins.map(x => x.value.trim()); if(TOTAL()) S.end = Date.now() + TOTAL() * 1000; save(); enterStation(0); };
+  $('#go').onclick = () => { const g = ins.find(x => x.dataset.g); S.team = g ? g.value.trim() : ''; S.names = ins.filter(x => !x.dataset.g).map(x => x.value.trim()).filter(Boolean); if(TOTAL()) S.end = Date.now() + TOTAL() * 1000; save(); enterStation(0); };
 }
 function rResume(){
-  $('#view').innerHTML = `<div class="ask"><div class="badge-ic">${ic('star')}</div><h2>${T.welcome}</h2><p>${esc((S.names || []).filter(Boolean).join(' & '))}</p>
+  $('#view').innerHTML = `<div class="ask"><div class="badge-ic">${ic('star')}</div><h2>${T.welcome}</h2><p>${esc(team())}</p>
     <div class="row"><button class="btn light" data-a="restart">${ic('refresh')} ${T.again}</button><button class="btn dark" data-a="resume">${T.cont} ${ic('arrow')}</button></div></div>`;
 }
 function rBrief(){
   const n = S.st, s = ST()[n];
   $('#view').innerHTML = `<div class="brief"><div class="pic" style="--c:${TILE[n % TILE.length]}"><span class="lbadge">${stars(s.sterne || n + 1)}</span><div class="ico">${ic(s.symbol || TYPSYM[(s.bausteine.find(b => b.typ !== 'info') || s.bausteine[0]).typ] || 'star', 'x')}</div></div>
-    <div class="txt"><div class="kick">${T.level} ${n + 1}</div><h2>${esc(s.titel)}</h2>
+    <div class="txt"><div class="kick">${T.level} ${n + 1}${s.anforderung && T.afb[s.anforderung] ? ' · ' + T.afb[s.anforderung] : ''}</div><h2>${esc(s.titel)}</h2>
       <ol>${s.erklaerung.map((e, i) => `<li><b class="n">${i + 1}</b><span>${esc(e)}</span></li>`).join('')}</ol>
       ${s.ziel ? `<div class="goal">${ic('flag')}<span>${esc(s.ziel)}</span></div>` : ''}
       <button class="btn dark big go" data-a="startst">${T.startLvl(n + 1)} ${ic('arrow')}</button></div></div>`;
@@ -959,7 +966,7 @@ function rReport(){
     return rows ? `<div class="rcard"><h4>${stars(s.sterne || n + 1)} ${T.level} ${n + 1} · ${esc(s.titel)}</h4>${rows}</div>` : '';
   }).join('');
   const A = APP.abschluss || {};
-  $('#view').innerHTML = `<div class="ask"><div class="badge-ic">${ic('trophy')}</div><h2>${esc(A.titel || (EN ? 'Well done' : 'Geschafft') + ((S.names || []).filter(Boolean).length ? ', ' + S.names.filter(Boolean).join(' & ') : '') + '!')}</h2>
+  $('#view').innerHTML = `<div class="ask"><div class="badge-ic">${ic('trophy')}</div><h2>${esc(A.titel || (EN ? 'Well done' : 'Geschafft') + (team() ? ', ' + team() : '') + '!')}</h2>
     ${all ? `<div class="score">${ic('check')} ${T.resultsOf(ok, all)}</div>` : ''}<p style="margin-top:14px">${esc(A.text || T.show)}</p></div>
     <div class="rep">${cards}</div><div style="text-align:center;margin-top:18px"><button class="linkbtn" data-a="restart">${T.again}</button></div>`;
   if(!S.party){ S.party = 1; save(); confetti(2); }
@@ -1037,7 +1044,7 @@ function lockScreen(){
   $('#pgo').onclick = go; $('#pw').onkeydown = e => { if(e.key === 'Enter') go(); };
 }
 function duForm(){
-  if(EN || (APP.namen ?? 2) !== 1) return;
+  if(EN || SF() !== 'EA') return;
   Object.assign(T, {goal:'Dein Ziel:', minutes:m => `Du hast ${m} Minuten Zeit.`, wrong:'Noch nicht ganz. Versuch es noch einmal.', wrong2:'Noch nicht ganz. Schau dir den Tipp an.',
     partly:n => `${n} richtig. Schau dir die roten noch einmal an.`, solved:'Hier ist die Lösung. Lies sie genau.', complete:'Bearbeite zuerst alles.',
     more:m => `Brauchst du noch ${m} Minuten?`, no:'Nein, ich bin fertig', timeup2:'Die Zeit ist um! Jetzt siehst du dein Ergebnis.', results:'Dein Ergebnis',
