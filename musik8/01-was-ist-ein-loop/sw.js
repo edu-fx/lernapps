@@ -1,6 +1,6 @@
 // Offline-Speicher der Lern-App (von lernapp.py erzeugt). Seite: zuerst Netz (Updates kommen an), sonst Speicher.
 // Bilder, Audio, Schriften: zuerst Speicher. VERSION ändert sich bei jedem Bauen automatisch.
-const VERSION = 'musik8-01-was-ist-ein-loop-9f469a16';
+const VERSION = 'musik8-01-was-ist-ein-loop-3722bf57';
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./assets/gitarre_rockig.wav", "./assets/gitarre_ruhig.wav", "./assets/icon-180.png", "./assets/icon-512.png", "./assets/keyboard_lebhaft.wav", "./assets/keyboard_ruhig.wav", "./assets/schlagzeug_ruhig.wav", "./assets/schlagzeug_treibend.wav", "./assets/synth_bass.wav", "./assets/synth_flaeche.wav"];
 
 self.addEventListener('install', e => {

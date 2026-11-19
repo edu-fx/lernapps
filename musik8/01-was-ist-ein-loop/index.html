@@ -166,10 +166,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 .rtitle{font-size:24px;font-weight:800;letter-spacing:-.02em;margin:0 0 12px}
 .gl{border-bottom:2.5px dotted #B8B4AE;cursor:pointer}
 audio{width:100%;margin:6px 0 10px}
-.lm-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid var(--line)}
-.lm-name{flex:0 0 130px;font-weight:700}
-.lm-b{min-height:44px;padding:0 16px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1.5px var(--line);font-weight:600;font-size:15px}
-.lm-b.on{background:var(--ink);color:#fff;box-shadow:none}
+.sq-leiste{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 8px}
+.sq-block{min-height:46px;min-width:64px;padding:0 14px;border-radius:12px;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.sq-block.gesetzt{width:100%;height:100%;min-width:0;padding:0 4px;font-size:13px;border-radius:9px}
+.sq-geist{position:fixed;z-index:999;pointer-events:none;opacity:.9;transform:scale(1.08)}
+.sq-hinweis{font-size:14px;color:var(--muted);margin-bottom:12px}
+.sq-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.sq-raster{position:relative;display:grid;gap:6px;min-width:640px}
+.sq-nr{text-align:center;font-size:12px;font-weight:700;color:var(--muted)}
+.sq-name{font-weight:800;display:flex;align-items:center}
+.sq-zelle{height:54px;border-radius:10px;background:#F4F1EE;box-shadow:inset 0 0 0 1.5px var(--line)}
+.sq-zelle.ziel{box-shadow:inset 0 0 0 3px var(--ink)}
+.sq-kopf{display:none;position:absolute;top:0;bottom:0;width:3px;background:var(--ink);border-radius:2px;pointer-events:none}
 .lm-ctl{display:flex;gap:10px;justify-content:center;margin-top:16px}
 .yt{position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000;margin:6px 0 10px}
 .yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -397,7 +405,7 @@ audio{width:100%;margin:6px 0 10px}
    Testmodus: index.html?dev  (kurze Zeit + Sprungmenü)
    ════════════════════════════════════════════════════════════════ */
 const META = {"fach": "musik", "lang": "de", "id": "musik8-01-was-ist-ein-loop", "frage": "Was ist ein Loop?", "kicker": "Beats mit dem Computer", "kurz": "Loops"};
-let APP = {"frage": "Was ist ein Loop?", "kurz": "Loops", "kicker": "Beats mit dem Computer", "untertitel": "Baut aus Loops euren eigenen Song.", "auftrag": "Arbeitet zu zweit mit dem iPad. Nehmt Kopfhörer.", "ziel": "Am Ende wisst ihr, was ein Loop ist, und habt aus Loops einen Song gebaut.", "sozialform": "PA", "zeit": {"gesamt": 20, "extra": 5}, "stationen": [{"titel": "Was ist ein Loop?", "kurz": "Wissen", "sterne": 1, "symbol": "musik", "anforderung": "reproduktion", "auftrag": "Lest, was ein Loop ist.", "erklaerung": ["Lest den Merkkasten.", "Entscheidet dann: richtig oder falsch?"], "bausteine": [{"typ": "info", "titel": "Merke", "merke": true, "text": "Ein **Loop** ist ein kurzer Musikabschnitt, zum Beispiel zwei Takte lang, der sich immer wieder wiederholt.\n\nLegt man Loops verschiedener Instrumente übereinander, entsteht ein Song."}, {"typ": "wahr_falsch", "titel": "Richtig oder falsch?", "aussagen": [{"text": "Ein Loop wiederholt sich immer wieder.", "wahr": true}, {"text": "Ein Loop ist immer ein ganzer Song.", "wahr": false}, {"text": "Loops verschiedener Instrumente kann man übereinanderlegen.", "wahr": true}, {"text": "Ein Loop klingt bei jeder Wiederholung anders.", "wahr": false}], "erklaerung": "Ein Loop ist kurz und klingt bei jeder Wiederholung gleich. Mehrere Loops zusammen ergeben einen Song."}]}, {"titel": "Song bauen", "kurz": "Bauen", "sterne": 2, "symbol": "musik", "anforderung": "reorganisation", "auftrag": "Baut aus den Loops euren eigenen Song.", "erklaerung": ["Jedes Instrument hat zwei Loops, die ganz unterschiedlich wirken.", "Wählt für jedes Instrument einen Loop oder „Aus“ und drückt auf „Song abspielen“.", "Ihr könnt auch während des Abspielens wechseln."], "bausteine": [{"typ": "loopmixer", "titel": "Euer Song aus Loops", "aufgabe": "Wählt für mindestens drei Instrumente einen Loop und hört euch euren Song an.", "mindest": 3, "spuren": [{"name": "Gitarre", "loops": [{"name": "Ruhig", "datei": "assets/gitarre_ruhig.wav"}, {"name": "Rockig", "datei": "assets/gitarre_rockig.wav"}]}, {"name": "Keyboard", "loops": [{"name": "Ruhig", "datei": "assets/keyboard_ruhig.wav"}, {"name": "Lebhaft", "datei": "assets/keyboard_lebhaft.wav"}]}, {"name": "Schlagzeug", "loops": [{"name": "Ruhig", "datei": "assets/schlagzeug_ruhig.wav"}, {"name": "Treibend", "datei": "assets/schlagzeug_treibend.wav"}]}, {"name": "Synthesizer", "loops": [{"name": "Fläche", "datei": "assets/synth_flaeche.wav"}, {"name": "Bass", "datei": "assets/synth_bass.wav"}]}], "tipp": "Probiert beide Loops jedes Instruments aus. Wie verändert sich euer Song?"}]}, {"titel": "Unser Song", "kurz": "Beschreiben", "sterne": 3, "symbol": "schreiben", "anforderung": "transfer", "auftrag": "Beschreibt euren Song.", "erklaerung": ["Welche Loops habt ihr gewählt?", "Wie wirkt euer Song?"], "bausteine": [{"typ": "schreiben", "titel": "So klingt unser Song", "aufgabe": "Schreibt auf, welche Loops ihr gewählt habt und wie euer Song wirkt.", "satzanfaenge": ["Wir haben … gewählt.", "Unser Song wirkt …, weil …", "Ein Loop ist …"], "mindestwoerter": 15, "zeilen": 5}]}]};
+let APP = {"frage": "Was ist ein Loop?", "kurz": "Loops", "kicker": "Beats mit dem Computer", "untertitel": "Baut im Sequenzer aus Loops euren eigenen Song.", "auftrag": "Arbeitet zu zweit mit dem iPad. Nehmt Kopfhörer.", "ziel": "Am Ende wisst ihr, was ein Loop ist, und habt im Sequenzer aus Loops einen Song gebaut.", "sozialform": "PA", "zeit": {"gesamt": 20, "extra": 5}, "stationen": [{"titel": "Was ist ein Loop?", "kurz": "Wissen", "sterne": 1, "symbol": "musik", "anforderung": "reproduktion", "auftrag": "Lest, was ein Loop ist.", "erklaerung": ["Lest den Merkkasten.", "Entscheidet dann: richtig oder falsch?"], "bausteine": [{"typ": "info", "titel": "Merke", "merke": true, "text": "Ein **Loop** ist ein kurzer Musikabschnitt, zum Beispiel zwei Takte lang, der sich immer wieder wiederholt.\n\nLegt man Loops verschiedener Instrumente übereinander, entsteht ein Song."}, {"typ": "wahr_falsch", "titel": "Richtig oder falsch?", "aussagen": [{"text": "Ein Loop wiederholt sich immer wieder.", "wahr": true}, {"text": "Ein Loop ist immer ein ganzer Song.", "wahr": false}, {"text": "Loops verschiedener Instrumente kann man übereinanderlegen.", "wahr": true}, {"text": "Ein Loop klingt bei jeder Wiederholung anders.", "wahr": false}], "erklaerung": "Ein Loop ist kurz und klingt bei jeder Wiederholung gleich. Mehrere Loops zusammen ergeben einen Song."}]}, {"titel": "Song bauen", "kurz": "Bauen", "sterne": 2, "symbol": "musik", "anforderung": "reorganisation", "auftrag": "Baut im Sequenzer aus Loops euren eigenen Song.", "erklaerung": ["Tippt einen Loop an und hört ihn euch an.", "Zieht die Loops in den Sequenzer. Jede Spalte ist so lang wie ein Loop.", "Legt Loops übereinander und schiebt sie hin und her, bis euch der Song gefällt."], "bausteine": [{"typ": "sequenzer", "titel": "Euer Song im Sequenzer", "aufgabe": "Zieht mindestens vier Loops von mindestens zwei Instrumenten in den Sequenzer und hört euch euren Song an.", "mindest": 4, "spuren": [{"name": "Gitarre", "loops": [{"name": "Gitarre 1", "datei": "assets/gitarre_ruhig.wav"}, {"name": "Gitarre 2", "datei": "assets/gitarre_rockig.wav"}]}, {"name": "Keyboard", "loops": [{"name": "Keys 1", "datei": "assets/keyboard_ruhig.wav"}, {"name": "Keys 2", "datei": "assets/keyboard_lebhaft.wav"}]}, {"name": "Schlagzeug", "loops": [{"name": "Drums 1", "datei": "assets/schlagzeug_ruhig.wav"}, {"name": "Drums 2", "datei": "assets/schlagzeug_treibend.wav"}]}, {"name": "Synthesizer", "loops": [{"name": "Synth 1", "datei": "assets/synth_flaeche.wav"}, {"name": "Synth 2", "datei": "assets/synth_bass.wav"}]}], "tipp": "Ein Loop klingt bei jeder Wiederholung gleich. Probiert aus, wie es klingt, wenn ihr Loops übereinanderlegt oder versetzt einsetzen lasst.", "felder": 8}]}, {"titel": "Unser Song", "kurz": "Beschreiben", "sterne": 3, "symbol": "schreiben", "anforderung": "transfer", "auftrag": "Beschreibt euren Song.", "erklaerung": ["Welche Loops habt ihr gewählt?", "Wie wirkt euer Song?"], "bausteine": [{"typ": "schreiben", "titel": "So klingt unser Song", "aufgabe": "Schreibt auf, welche Loops ihr gewählt habt und wie euer Song wirkt.", "satzanfaenge": ["Wir haben zuerst … gelegt.", "Danach setzt … ein.", "Unser Song wirkt …, weil …", "Ein Loop ist …"], "mindestwoerter": 15, "zeilen": 5}]}]};
 const ENC = /*__ENC__*/null;
 
 const DEV = /[?&]dev\b/.test(location.search);
@@ -471,7 +479,7 @@ const P = {
 const ic = (n, c='ic') => n === 'star' ? `<svg class="st" viewBox="0 0 24 24">${P.star}</svg>` :
   `<svg class="${c}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${P[n] || P.info}</svg>`;
 const stars = n => `<span class="stars">${Array.from({length:n}, () => ic('star')).join('')}</span>`;
-const TYPSYM = {info:'info', lesetext:'lesen', audio:'hoeren', loopmixer:'musik', mc:'quiz', wahr_falsch:'quiz', luecken:'luecke', zuordnen:'puzzle', kategorien:'sortieren',
+const TYPSYM = {info:'info', lesetext:'lesen', audio:'hoeren', sequenzer:'musik', mc:'quiz', wahr_falsch:'quiz', luecken:'luecke', zuordnen:'puzzle', kategorien:'sortieren',
   reihenfolge:'ordnen', markieren:'markieren', schreiben:'schreiben', kurzantwort:'schreiben', dialog:'sprechen', karteikarten:'karten'};
 const TILE = ['#F6E3CF', '#DDEBDD', '#DCE7F3', '#FCE9A8', '#EADCF3', '#F9DCDC', '#D9EEEA'];
 
@@ -744,55 +752,127 @@ B.schreiben = (b, st) => {
     $$('[data-c]', el).forEach(x => x.classList.toggle('on', st.c.includes(+x.dataset.c))); updFoot(); }
 };
 
-// Loop-Mixer (Franz, 19.11.2026): je Spur (Instrument) einen Loop wählen oder „Aus“; alle Loops laufen synchron in Schleife
-// (Web Audio). Ein Wechsel während des Abspielens setzt an derselben Stelle im Takt ein. Nicht geprüft; Auswahl erscheint im Ergebnis.
-B.loopmixer = (b, st) => {
-  if(!Array.isArray(st.v) || st.v.length !== b.spuren.length) st.v = b.spuren.map(() => -1);
-  let ctx = null, bufs = {}, src = {}, t0 = 0, dur = 0, playing = false, wache = null, root = null;
-  const aus = EN ? 'Off' : 'Aus';
-  const k = (si, li) => si + '.' + li;
-  const aktiv = () => st.v.filter(v => v >= 0).length;
+// Sequenzer (Franz, 19.11.2026): Loops als Bausteine aus der Leiste in die Spur ihres Instruments ziehen, dort hin und her
+// schieben, übereinanderlegen (gleiche Spalte in mehreren Spuren) und durch Herausziehen löschen. Antippen = Loop anhören.
+// Jede Spalte ist so lang wie ein Loop; „Abspielen“ spielt alle Spalten nacheinander (Web Audio, taktgenau).
+B.sequenzer = (b, st) => {
+  const N = b.felder || 8;
+  if(!Array.isArray(st.v)) st.v = [];                       // [{s, l, i}] = Spur, Loop, Spalte
+  const FARBEN = ['#E07A2F', '#3E8E6E', '#3F6FB5', '#B5476B', '#7A5BB5', '#8A7A2E'];
+  const farbe = s => FARBEN[s % FARBEN.length];
+  let ctx = null, bufs = {}, dur = 0, quellen = [], playing = false, t0 = 0, start0 = 0, raf = null, wache = null, root = null;
+  const k = (s, l) => s + '.' + l;
+  const am = (s, i) => st.v.find(p => p.s === s && p.i === i);
   async function laden(){
     if(!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
     if(ctx.state === 'suspended') await ctx.resume();
-    await Promise.all(b.spuren.flatMap((sp, si) => sp.loops.map(async (l, li) => {
-      if(bufs[k(si, li)]) return;
-      const a = await (await fetch(l.datei)).arrayBuffer();
-      bufs[k(si, li)] = await new Promise((res, rej) => ctx.decodeAudioData(a, res, rej));
+    await Promise.all(b.spuren.flatMap((sp, s) => sp.loops.map(async (lp, l) => {
+      if(bufs[k(s, l)]) return;
+      const a = await (await fetch(lp.datei)).arrayBuffer();
+      bufs[k(s, l)] = await new Promise((res, rej) => ctx.decodeAudioData(a, res, rej));
     })));
     dur = Math.max(...Object.values(bufs).map(x => x.duration));
   }
-  function stopSpur(si){ if(src[si]){ try{ src[si].stop(); }catch(e){} src[si] = null; } }
-  function startSpur(si){
-    stopSpur(si); const li = st.v[si]; if(!playing || li < 0) return;
-    const s = ctx.createBufferSource(); s.buffer = bufs[k(si, li)]; s.loop = true; s.connect(ctx.destination);
-    s.start(0, ((ctx.currentTime - t0) % dur + dur) % dur); src[si] = s;
+  function quelle(buf, wann, offset = 0){
+    const q = ctx.createBufferSource(); q.buffer = buf; q.connect(ctx.destination); q.start(wann, offset); quellen.push(q); return q;
   }
-  function stopAlle(){ playing = false; b.spuren.forEach((_, si) => stopSpur(si)); if(wache){ clearInterval(wache); wache = null; } paint(); }
-  async function start(){
-    const pb = root && $('[data-play]', root); if(pb) pb.disabled = true;
-    try{ await laden(); }catch(e){ if(pb) pb.disabled = false; toast(EN ? 'Could not load the loops.' : 'Die Loops konnten nicht geladen werden.'); return; }
-    playing = true; t0 = ctx.currentTime + 0.05; st.played = true; save();
-    b.spuren.forEach((_, si) => startSpur(si));
-    wache = setInterval(() => { if(!root || !document.body.contains(root)) stopAlle(); }, 400);
-    if(pb) pb.disabled = false; paint(); updFoot();
+  function alleStopp(){ quellen.forEach(q => { try{ q.stop(); }catch(e){} }); quellen = []; }
+  function stopp(){ playing = false; alleStopp(); cancelAnimationFrame(raf); if(wache){ clearInterval(wache); wache = null; } kopf(-1); knopf(); }
+  // spielt ab Spalte `ab` bis zum Ende
+  function planen(ab){
+    alleStopp(); t0 = ctx.currentTime + 0.06; start0 = ab;
+    for(let i = ab; i < N; i++) st.v.filter(p => p.i === i).forEach(p => quelle(bufs[k(p.s, p.l)], t0 + (i - ab) * dur));
   }
-  function paint(){
-    if(!root) return;
-    $$('.lm-b', root).forEach(x => x.classList.toggle('on', st.v[+x.dataset.s] === +x.dataset.l));
-    const pb = $('[data-play]', root); if(pb) pb.textContent = playing ? (EN ? 'Stop' : 'Stopp') : (EN ? 'Play song' : 'Song abspielen');
+  async function abspielen(){
+    try{ await laden(); }catch(e){ toast(EN ? 'Could not load the loops.' : 'Die Loops konnten nicht geladen werden.'); return; }
+    playing = true; st.played = true; save(); planen(0); knopf(); updFoot();
+    const tick = () => {
+      if(!playing) return;
+      const pos = start0 + (ctx.currentTime - t0) / dur;
+      if(pos >= N){ stopp(); return; }
+      kopf(pos); raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    wache = setInterval(() => { if(!root || !document.body.contains(root)) stopp(); }, 400);
+  }
+  // Änderung während des Abspielens: Zeitachse bleibt, ab der laufenden Spalte neu einplanen (laufende Spalte setzt an der richtigen Stelle ein)
+  function neuPlanen(){
+    if(!playing) return;
+    const jetzt = ctx.currentTime, cur = Math.floor(start0 + (jetzt - t0) / dur);
+    alleStopp();
+    st.v.filter(p => p.i >= cur).forEach(p => { const wann = t0 + (p.i - start0) * dur;
+      if(wann >= jetzt) quelle(bufs[k(p.s, p.l)], wann); else quelle(bufs[k(p.s, p.l)], jetzt, jetzt - wann); });
+  }
+  async function anhoeren(s, l){
+    try{ await laden(); }catch(e){ return; }
+    if(playing) stopp();
+    alleStopp(); quelle(bufs[k(s, l)], ctx.currentTime + 0.02);
+  }
+  function kopf(pos){
+    const h = root && $('.sq-kopf', root); if(!h) return;
+    if(pos < 0){ h.style.display = 'none'; return; }
+    const g = $('.sq-raster', root), z = $('.sq-zelle', root);
+    h.style.display = 'block'; h.style.left = (z.offsetLeft + pos * (g.scrollWidth - z.offsetLeft) / N) + 'px';
+  }
+  function knopf(){ const pb = root && $('[data-play]', root); if(pb) pb.textContent = playing ? (EN ? 'Stop' : 'Stopp') : (EN ? 'Play song' : 'Song abspielen'); }
+  const block = (s, l, extra = '') => `<div class="sq-block${extra}" data-s="${s}" data-l="${l}" style="background:${farbe(s)}">${esc(b.spuren[s].loops[l].name)}</div>`;
+  function zeichnen(){
+    $$('.sq-zelle', root).forEach(z => { const p = am(+z.dataset.s, +z.dataset.i); z.innerHTML = p ? block(p.s, p.l, ' gesetzt') : ''; });
+    $$('.sq-zelle .sq-block', root).forEach(el => ziehbar(el, true));
+  }
+  // Ziehen mit Pointer Events (Finger, Stift, Maus); kurzes Antippen = anhören
+  function ziehbar(el, gesetzt){
+    el.onpointerdown = e => {
+      e.preventDefault();
+      const s = +el.dataset.s, l = +el.dataset.l, x0 = e.clientX, y0 = e.clientY;
+      const von = gesetzt ? +el.parentNode.dataset.i : null;
+      let geist = null;
+      const bewegen = ev => {
+        if(!geist && Math.hypot(ev.clientX - x0, ev.clientY - y0) < 6) return;
+        if(!geist){ geist = el.cloneNode(true); geist.classList.add('sq-geist'); document.body.appendChild(geist); if(gesetzt) el.style.opacity = .3; }
+        geist.style.left = (ev.clientX - geist.offsetWidth / 2) + 'px'; geist.style.top = (ev.clientY - geist.offsetHeight / 2) + 'px';
+        $$('.sq-zelle', root).forEach(z => z.classList.remove('ziel'));
+        const z = zielZelle(ev, s); if(z) z.classList.add('ziel');
+      };
+      const los = ev => {
+        window.removeEventListener('pointermove', bewegen); window.removeEventListener('pointerup', los); window.removeEventListener('pointercancel', los);
+        $$('.sq-zelle', root).forEach(z => z.classList.remove('ziel'));
+        if(!geist){ anhoeren(s, l); return; }
+        geist.remove();
+        const z = zielZelle(ev, s);
+        if(gesetzt) st.v = st.v.filter(p => !(p.s === s && p.i === von));
+        if(z){ const i = +z.dataset.i; st.v = st.v.filter(p => !(p.s === s && p.i === i)); st.v.push({s, l, i}); }
+        save(); zeichnen(); neuPlanen(); updFoot();
+      };
+      window.addEventListener('pointermove', bewegen); window.addEventListener('pointerup', los); window.addEventListener('pointercancel', los);
+    };
+  }
+  // Zielspalte unter dem Finger; der Loop landet immer in der Spur seines Instruments
+  function zielZelle(ev, s){
+    const r = $('.sq-raster', root).getBoundingClientRect();
+    if(ev.clientX < r.left - 20 || ev.clientX > r.right + 20 || ev.clientY < r.top - 40 || ev.clientY > r.bottom + 40) return null;
+    const zellen = $$(`.sq-zelle[data-s="${s}"]`, root);
+    let best = null, d = 1e9;
+    zellen.forEach(z => { const q = z.getBoundingClientRect(), m = Math.abs(ev.clientX - (q.left + q.width / 2)); if(m < d){ d = m; best = z; } });
+    return best;
   }
   return {
-    html: () => b.spuren.map((sp, si) => `<div class="lm-row"><span class="lm-name">${esc(sp.name)}</span>` +
-        `<button class="lm-b" data-s="${si}" data-l="-1">${aus}</button>` +
-        sp.loops.map((l, li) => `<button class="lm-b" data-s="${si}" data-l="${li}">${esc(l.name)}</button>`).join('') + `</div>`).join('') +
-      `<div class="lm-ctl"><button class="btn dark" data-play="1">${EN ? 'Play song' : 'Song abspielen'}</button></div>`,
+    html: () => `<div class="sq-leiste">${b.spuren.map((sp, s) => sp.loops.map((_, l) => block(s, l)).join('')).join('')}</div>` +
+      `<div class="sq-hinweis">${EN ? 'Tap a loop to listen. Drag it into the sequencer. Drag it out to delete it.' : 'Tippe einen Loop an, um ihn zu hören. Zieh ihn in den Sequenzer. Zum Löschen wieder herausziehen.'}</div>` +
+      `<div class="sq-wrap"><div class="sq-raster" style="grid-template-columns:110px repeat(${N}, minmax(64px, 1fr))">` +
+      `<div></div>${Array.from({length: N}, (_, i) => `<div class="sq-nr">${i + 1}</div>`).join('')}` +
+      b.spuren.map((sp, s) => `<div class="sq-name" style="color:${farbe(s)}">${esc(sp.name)}</div>` +
+        Array.from({length: N}, (_, i) => `<div class="sq-zelle" data-s="${s}" data-i="${i}"></div>`).join('')).join('') +
+      `<div class="sq-kopf"></div></div></div>` +
+      `<div class="lm-ctl"><button class="btn light sm" data-leeren="1">${EN ? 'Clear' : 'Alles löschen'}</button><button class="btn dark" data-play="1">${EN ? 'Play song' : 'Song abspielen'}</button></div>`,
     mount(el){ root = el;
-      $$('.lm-b', el).forEach(x => x.onclick = () => { const si = +x.dataset.s; st.v[si] = +x.dataset.l; save(); if(playing) startSpur(si); paint(); updFoot(); });
-      $('[data-play]', el).onclick = () => playing ? stopAlle() : start();
-      paint(); },
-    ready: () => !!st.played && aktiv() >= (b.mindest || 2),
-    text: () => { stopAlle(); return b.spuren.map((sp, si) => `${sp.name}: ${st.v[si] >= 0 ? sp.loops[st.v[si]].name : aus}`).join(' · '); },
+      $$('.sq-leiste .sq-block', el).forEach(x => ziehbar(x, false));
+      $('[data-play]', el).onclick = () => playing ? stopp() : abspielen();
+      $('[data-leeren]', el).onclick = () => { st.v = []; save(); zeichnen(); neuPlanen(); updFoot(); };
+      zeichnen(); knopf(); },
+    ready: () => !!st.played && st.v.length >= (b.mindest || 4) && new Set(st.v.map(p => p.s)).size >= 2,
+    text: () => { stopp(); return b.spuren.map((sp, s) => { const ps = st.v.filter(p => p.s === s).sort((a, c) => a.i - c.i);
+      return `${sp.name}: ` + (ps.length ? ps.map(p => `${p.i + 1} ${sp.loops[p.l].name}`).join(', ') : '–'); }).join(' · '); },
   };
 };
 
