@@ -129,8 +129,9 @@ const LOESUNG = {
   synth:     [_,_,_,_,_,_,["synth_2"],["synth_2"]],
 };
 const MIX_ZIEL = {klavier:50, gitarre:60, bass:80, schlagzeug:80, synth:100};
-const MASTER_ZIEL = {programm:"hall", stufe:4};
-const PROGRAMME = [["hall","Hall"],["echo","Echo"],["verzerrer","Verzerrer"]];
+/* Mastering mit Spielraum: Hall ODER Echo, Stufe frei (mind. 1). Verzerrer passt nicht (Song soll sauber klingen). */
+const MASTER_ZIEL = {programme:["hall","echo"], minStufe:1};
+const PROGRAMME = [["hall","Hall","klingt wie ein großer Raum"],["echo","Echo","wiederholt den Klang"],["verzerrer","Verzerrer","macht den Klang rau und kratzig"]];
 
 const WORTSPEICHER = [
   ["Sequenzer","Programm, in dem man Loops auf Tonspuren anordnet und so einen Song zusammensetzt."],
@@ -167,7 +168,7 @@ const SCHRITTE = [
   {titel:"Schlagzeug", spur:"schlagzeug", plan:"b-schlagzeug", auftrag:"Vierte Tonspur: das Schlagzeug. Achtet auf die Pause! Es gibt mehr als einen passenden Beat – entscheidet selbst."},
   {titel:"Synthesizer", spur:"synth", plan:"b-synth", auftrag:"Fünfte Tonspur: der Synthesizer. Sucht das Arpeggio und legt es an die richtige Stelle."},
   {titel:"Mixing", spur:null, plan:"b-mix", auftrag:"Stellt die Lautstärke jeder Tonspur so ein, wie es in der Bauanleitung steht. Hört euch den Song dabei an."},
-  {titel:"Mastering", spur:null, plan:"b-master", auftrag:"Wählt das passende Master-Programm für den ganzen Song und stellt es am Drehregler richtig ein."},
+  {titel:"Mastering", spur:null, plan:"b-master", auftrag:"Wählt Hall oder Echo – ihr entscheidet. Die Stufe am Drehregler dürft ihr frei wählen (mindestens Stufe 1)."},
 ];
 const ALLE_SCHRITTE = ["Fachbegriffe","Bauanleitung",...SCHRITTE.map(s=>s.titel)];
 
@@ -363,7 +364,7 @@ const PLAN = {
   "b-schlagzeug":["var(--schlagzeug)","<b>Schlagzeug:</b> ein <b>gleichmäßiger</b> Beat <b>ab Takt 5</b>. In <b>Takt 13–14 hat das Schlagzeug Pause</b> (Break). In Takt 15–16 spielt es wieder."],
   "b-synth":["var(--synth)","<b>Synthesizer:</b> ein <b>Arpeggio</b> – die Töne eines Akkords erklingen schnell nacheinander. Es spielt <b>nur in Takt 13–16</b>."],
   "b-mix":["var(--accent)","Das Arpeggio ist der Höhepunkt und soll am lautesten sein, das Klavier bleibt im Hintergrund:<br><b>Klavier 50 % · Gitarre 60 % · Bass 80 % · Schlagzeug 80 % · Synthesizer 100 %</b>"],
-  "b-master":["var(--accent)","Der ganze Song soll klingen, als würde er <b>in einem großen Konzertsaal</b> gespielt – aber nicht verwaschen. Wählt das passende Master-Programm und stellt es auf <b>Stufe 4</b>."],
+  "b-master":["var(--accent)","<b>Programm:</b> <b>Hall oder Echo</b> – ihr entscheidet, was euch besser gefällt.<br><b>Stufe:</b> frei wählbar, <b>mindestens Stufe 1</b>.<br><b>Nicht</b> den Verzerrer – der Song soll sauber klingen."],
 };
 function anleitungHTML(markiert){
   const p=id=>`<div class="punkt ${markiert===id?"mark":""}" id="${id}"><span class="dot" style="background:${PLAN[id][0]}"></span><div>${PLAN[id][1]}</div></div>`;
@@ -433,7 +434,7 @@ SEITEN.a2 = () => {
         <b id="v-${s.id}">${S.vol[s.id]} %</b></div>`).join("")}</div>`;
   } else {
     mitte = `<div class="karte"><b>Mastering</b> <span class="muted">– der Effekt wirkt auf den ganzen Song. Wählt ein Programm und hört es euch mit dem Song an.</span>
-      <div class="programme">${PROGRAMME.map(([id,n])=>`<div class="programm ${S.programm===id?"an":""}" data-prog="${id}"><div class="name">${n}</div><div class="muted" style="font-size:14px">Master-Programm</div></div>`).join("")}</div>
+      <div class="programme">${PROGRAMME.map(([id,n])=>`<div class="programm ${S.programm===id?"an":""}" data-prog="${id}"><div class="name">${n}</div><div class="muted" style="font-size:14px">${PROGRAMME.find(p=>p[0]===id)[2]}</div></div>`).join("")}</div>
       <div class="knopfbox"><div id="knopfwrap">${knopfSVG()}</div>
         <div><div class="muted">Stärke des Effekts</div><div class="stufe" id="stufe">Stufe ${S.stufe}</div>
         <div class="zeile" style="margin-top:8px"><button class="sek pm klein" id="stMinus">−</button><button class="sek pm klein" id="stPlus">+</button></div>
@@ -503,8 +504,8 @@ function pruefung(n){
   }
   if(n===6){
     if(!S.programm) return "Wählt zuerst ein Master-Programm aus.";
-    if(S.programm!==MASTER_ZIEL.programm) return "Hört euch das Programm noch einmal an: Klingt der Song so, als würde er in einem großen Konzertsaal gespielt?";
-    if(S.stufe!==MASTER_ZIEL.stufe) return S.stufe>MASTER_ZIEL.stufe ? "Das richtige Programm! Aber der Effekt ist zu stark – der Song klingt verwaschen. Schaut, welche Stufe in der Bauanleitung steht." : "Das richtige Programm! Aber der Effekt ist noch zu schwach. Schaut, welche Stufe in der Bauanleitung steht.";
+    if(!MASTER_ZIEL.programme.includes(S.programm)) return "Der Verzerrer macht den Song rau und kratzig. Laut Bauanleitung soll er sauber klingen – wählt Hall oder Echo.";
+    if(S.stufe<MASTER_ZIEL.minStufe) return "Gutes Programm! Dreht den Regler noch auf mindestens Stufe 1 – sonst hört man den Effekt gar nicht.";
     return "";
   }
   return "";
